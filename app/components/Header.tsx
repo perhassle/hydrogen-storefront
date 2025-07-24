@@ -143,6 +143,7 @@ function CartBadge({count}: {count: number | null}) {
   return (
     <a
       href="/cart"
+      className="cart-badge"
       onClick={(e) => {
         e.preventDefault();
         open('cart');
@@ -154,7 +155,10 @@ function CartBadge({count}: {count: number | null}) {
         } as CartViewPayload);
       }}
     >
-      Cart {count === null ? <span>&nbsp;</span> : count}
+      🛒
+      {count !== null && count > 0 && (
+        <span className="cart-count">{count}</span>
+      )}
     </a>
   );
 }
