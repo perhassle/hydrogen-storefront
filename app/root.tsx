@@ -11,6 +11,7 @@ import {
   ScrollRestoration,
   useRouteLoaderData,
 } from 'react-router';
+
 import favicon from '~/assets/favicon.svg';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
@@ -67,13 +68,68 @@ export function links() {
 }
 
 export async function loader(args: LoaderFunctionArgs) {
+  const {env} = args.context;
+  
+  // Check if we're in local development mode
+  const isLocalDev = env.PUBLIC_STOREFRONT_API_TOKEN === 'mock-token';
+  
+  if (isLocalDev) {
+    return {
+      cart: Promise.resolve(null),
+      isLoggedIn: Promise.resolve(false),
+      footer: Promise.resolve(null),
+      publicStoreDomain: env.PUBLIC_STORE_DOMAIN,
+      shop: Promise.resolve(null),
+      consent: {
+        checkoutDomain: env.PUBLIC_CHECKOUT_DOMAIN,
+        storefrontAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
+        withPrivacyBanner: false,
+        country: args.context.storefront.i18n.country,
+        language: args.context.storefront.i18n.language,
+      },
+      header: {
+        shop: {
+          id: 'gid://shopify/Shop/1',
+          name: 'Demo Shop',
+          description: 'A demo shop for local development',
+          primaryDomain: {
+            url: 'https://demo-shop.myshopify.com',
+          },
+        },
+        menu: {
+          id: 'gid://shopify/Menu/1',
+          items: [
+            { 
+              id: 'gid://shopify/MenuItem/1',
+              type: 'URL',
+              title: 'Home', 
+              url: '/',
+              tags: [],
+              resourceId: null,
+              items: [],
+            },
+            { 
+              id: 'gid://shopify/MenuItem/2',
+              type: 'URL',
+              title: 'Products', 
+              url: '/collections/all',
+              tags: [],
+              resourceId: null,
+              items: [],
+            },
+          ],
+        },
+      },
+    };
+  }
+
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
 
   // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
 
-  const {storefront, env} = args.context;
+  const {storefront} = args.context;
 
   return {
     ...deferredData,
@@ -99,7 +155,31 @@ export async function loader(args: LoaderFunctionArgs) {
  * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
  */
 async function loadCriticalData({context}: LoaderFunctionArgs) {
-  const {storefront} = context;
+  const {storefront, env} = context;
+  
+  // Use mock data for local development
+  const isLocalDev = env.PUBLIC_STOREFRONT_API_TOKEN === 'mock-token';
+  
+  if (isLocalDev) {
+    return {
+      header: {
+        shop: {
+          id: 'gid://shopify/Shop/1',
+          name: 'Demo Shop',
+          description: 'A demo shop for local development',
+          primaryDomain: {
+            url: 'https://demo-shop.myshopify.com',
+          },
+        },
+        menu: {
+          items: [
+            { title: 'Home', url: '/' },
+            { title: 'Products', url: '/collections/all' },
+          ],
+        },
+      },
+    };
+  }
 
   const [header] = await Promise.all([
     storefront.query(HEADER_QUERY, {
@@ -164,7 +244,40 @@ export function Layout({children}: {children?: React.ReactNode}) {
             shop={data.shop}
             consent={data.consent}
           >
-            <PageLayout {...data}>{children}</PageLayout>
+            {data.header?.shop?.name === 'Demo Shop' ? (
+              // Simple layout for local development
+              <div className="min-h-screen bg-gray-50">
+                <header className="bg-white shadow-sm border-b">
+                  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex justify-between items-center py-6">
+                      <h1 className="text-2xl font-bold text-gray-900">
+                        {data.header.shop.name}
+                      </h1>
+                      <nav className="flex space-x-8">
+                        <a href="/" className="text-gray-500 hover:text-gray-900">
+                          Home
+                        </a>
+                        <a href="/collections/all" className="text-gray-500 hover:text-gray-900">
+                          Products
+                        </a>
+                      </nav>
+                    </div>
+                  </div>
+                </header>
+                <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+                  {children}
+                </main>
+                <footer className="bg-white border-t mt-auto">
+                  <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+                    <p className="text-center text-gray-400">
+                      Demo Hydrogen Storefront - Local Development Mode
+                    </p>
+                  </div>
+                </footer>
+              </div>
+            ) : (
+              <PageLayout {...(data as any)}>{children}</PageLayout>
+            )}
           </Analytics.Provider>
         ) : (
           children

@@ -7,10 +7,10 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   plugins: [
+    reactRouter(),
     tailwindcss(),
     hydrogen(),
     oxygen(),
-    reactRouter(),
     tsconfigPaths(),
   ],
   build: {
