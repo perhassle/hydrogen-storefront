@@ -84,10 +84,15 @@ export function ProductForm({
                       disabled={!exists}
                       onClick={() => {
                         if (!selected) {
-                          navigate(`?${variantUriQuery}`, {
-                            replace: true,
-                            preventScrollReset: true,
-                          });
+                          try {
+                            navigate(`?${variantUriQuery}`, {
+                              replace: true,
+                              preventScrollReset: true,
+                            });
+                          } catch (error) {
+                            console.error('Navigation failed:', error);
+                            // Could show user feedback here if needed
+                          }
                         }
                       }}
                     >
@@ -104,7 +109,12 @@ export function ProductForm({
       <AddToCartButton
         disabled={!selectedVariant || !selectedVariant.availableForSale}
         onClick={() => {
-          open('cart');
+          try {
+            open('cart');
+          } catch (error) {
+            console.error('Failed to open cart:', error);
+            // Could show user feedback here if needed
+          }
         }}
         lines={
           selectedVariant

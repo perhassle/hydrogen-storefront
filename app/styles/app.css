@@ -233,6 +233,19 @@ button.reset:hover:not(:has(> *)) {
   font-size: 0.75rem;
   font-weight: bold;
   transform: translate(50%, -50%);
+  
+  /* Add fallback for older browsers */
+  @supports not (transform: translate(50%, -50%)) {
+    top: -10px;
+    right: -10px;
+  }
+  
+  /* Ensure visibility on mobile devices */
+  @media (max-width: 768px) {
+    width: 18px;
+    height: 18px;
+    font-size: 0.7rem;
+  }
 }
 
 

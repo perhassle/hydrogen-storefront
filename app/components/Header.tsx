@@ -144,6 +144,7 @@ function CartBadge({count}: {count: number | null}) {
     <a
       href="/cart"
       className="cart-badge"
+      aria-label={`Shopping cart with ${count || 0} items`}
       onClick={(e) => {
         e.preventDefault();
         open('cart');

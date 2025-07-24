@@ -1,12 +1,13 @@
-import { chromium } from 'playwright';
+/* eslint-disable no-console */
+import { chromium, Browser, BrowserContext, Page } from 'playwright';
 
-async function testCartFunctionality() {
+async function testCartFunctionality(): Promise<void> {
   console.log('🧪 Starting Hydrogen Storefront Cart Tests');
   console.log('='.repeat(50));
 
-  const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext();
-  const page = await context.newPage();
+  const browser: Browser = await chromium.launch({ headless: true });
+  const context: BrowserContext = await browser.newContext();
+  const page: Page = await context.newPage();
 
   try {
     // Test 1: Navigate to homepage and check cart badge visibility
@@ -19,7 +20,7 @@ async function testCartFunctionality() {
     console.log(`   ✅ Cart badge visible: ${isCartBadgeVisible}`);
     
     if (isCartBadgeVisible) {
-      const cartText = await cartBadge.textContent();
+      const cartText: string | null = await cartBadge.textContent();
       console.log(`   📊 Cart badge content: "${cartText}"`);
     }
 
@@ -35,7 +36,7 @@ async function testCartFunctionality() {
       await collectionsLink.click();
       await page.waitForLoadState('networkidle');
       
-      const currentUrl = page.url();
+      const currentUrl: string = page.url();
       console.log(`   📍 Current URL: ${currentUrl}`);
       
       // Look for product items on the collections page
@@ -47,7 +48,7 @@ async function testCartFunctionality() {
         await productItems[0].click();
         await page.waitForLoadState('networkidle');
         
-        const productUrl = page.url();
+        const productUrl: string = page.url();
         console.log(`   📍 Product URL: ${productUrl}`);
         
         // Test 3: Look for Add to Cart functionality
@@ -60,14 +61,14 @@ async function testCartFunctionality() {
           console.log('   ✅ Attempting to add item to cart...');
           
           // Get initial cart count
-          const initialCartText = await page.locator('.cart-badge').first().textContent().catch(() => '');
+          const initialCartText: string = await page.locator('.cart-badge').first().textContent().catch(() => '') || '';
           console.log(`   📊 Initial cart state: "${initialCartText}"`);
           
           await addToCartButtons[0].click();
           await page.waitForTimeout(2000); // Wait for cart to update
           
           // Check updated cart count
-          const updatedCartText = await page.locator('.cart-badge').first().textContent().catch(() => '');
+          const updatedCartText: string = await page.locator('.cart-badge').first().textContent().catch(() => '') || '';
           console.log(`   📊 Updated cart state: "${updatedCartText}"`);
           
           if (initialCartText !== updatedCartText) {
@@ -115,8 +116,8 @@ async function testCartFunctionality() {
       console.log(`   📋 Cart sidebar visible: ${cartAsideVisible}`);
       
       if (cartAsideVisible) {
-        const cartContent = await cartAside.textContent();
-        console.log(`   📝 Cart sidebar content preview: "${cartContent.substring(0, 100)}..."`);
+        const cartContent: string | null = await cartAside.textContent();
+        console.log(`   📝 Cart sidebar content preview: "${cartContent?.substring(0, 100)}..."`);
       }
     }
 
@@ -126,10 +127,10 @@ async function testCartFunctionality() {
     await page.goto('http://localhost:3000/cart');
     await page.waitForLoadState('networkidle');
     
-    const cartPageTitle = await page.locator('h1').first().textContent().catch(() => '');
+    const cartPageTitle: string = await page.locator('h1').first().textContent().catch(() => '') || '';
     console.log(`   📰 Cart page title: "${cartPageTitle}"`);
     
-    const cartPageUrl = page.url();
+    const cartPageUrl: string = page.url();
     console.log(`   📍 Cart page URL: ${cartPageUrl}`);
     
     // Look for cart content elements
@@ -161,7 +162,7 @@ async function testCartFunctionality() {
     console.log('\n🎉 Cart functionality testing completed!');
     console.log('='.repeat(50));
 
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('❌ Error during testing:', error);
   } finally {
     await browser.close();
@@ -170,3 +171,5 @@ async function testCartFunctionality() {
 
 // Run the test
 testCartFunctionality().catch(console.error);
+
+/* eslint-enable no-console */

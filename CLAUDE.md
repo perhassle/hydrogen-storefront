@@ -80,4 +80,4 @@ The app supports local development with mock data when `PUBLIC_STOREFRONT_API_TO
 
 ## Development Reminders
 
-- när du byggt nått kolla alltid att det fungerar med plywright mcp
+- When you build something, always check that it works with Playwright MCP
