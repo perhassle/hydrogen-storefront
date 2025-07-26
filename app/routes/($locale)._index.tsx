@@ -7,6 +7,7 @@ import type {
   RecommendedProductFragment,
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
+import {SkeletonProductGrid, ErrorBoundary} from '~/components/Skeleton';
 
 export const meta: MetaFunction = () => {
   return [{title: 'Hydrogen | Home'}];
@@ -95,17 +96,19 @@ function RecommendedProducts({
   return (
     <div className="recommended-products">
       <h2>Recommended Products</h2>
-      <Suspense fallback={<div>Loading products...</div>}>
-        <Await resolve={products}>
-          {(response) => (
-            <div className="recommended-products-grid">
-              {response?.products?.nodes?.map((product: RecommendedProductFragment) => (
-                <RecommendedProduct key={product.id} product={product} />
-              ))}
-            </div>
-          )}
-        </Await>
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={<SkeletonProductGrid count={4} className="recommended-products-grid" />}>
+          <Await resolve={products}>
+            {(response) => (
+              <div className="recommended-products-grid">
+                {response?.products?.nodes?.map((product: RecommendedProductFragment) => (
+                  <RecommendedProduct key={product.id} product={product} />
+                ))}
+              </div>
+            )}
+          </Await>
+        </Suspense>
+      </ErrorBoundary>
       <br />
     </div>
   );
