@@ -1,9 +1,15 @@
 /// <reference types="vite/client" />
-/// <reference types="react-router" />
 /// <reference types="@shopify/oxygen-workers-types" />
 
 // Enhance TypeScript's built-in typings.
 import '@total-typescript/ts-reset';
+
+// Virtual module declarations for better TypeScript support
+declare module 'virtual:react-router/server-build' {
+  import type {ServerBuild} from 'react-router';
+  const serverBuild: ServerBuild;
+  export default serverBuild;
+}
 
 import type {
   HydrogenContext,
