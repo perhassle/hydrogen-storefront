@@ -18,6 +18,21 @@ export default defineConfig({
     oxygen(),
     tsconfigPaths(),
     {
+      name: 'virtual-module-resolver',
+      configureServer(server) {
+        // Ensure virtual modules are properly resolved in dev mode
+        server.middlewares.use('/__vite_virtual__', (req, res, next) => {
+          if (req.url?.includes('react-router/server-build')) {
+            // Handle virtual module resolution gracefully
+            res.setHeader('Content-Type', 'application/javascript');
+            res.end('export default {};');
+            return;
+          }
+          next();
+        });
+      },
+    },
+    {
       name: 'copy-manifest-and-assets',
       writeBundle() {
         // Copy manifest.json and assets to client/.vite/ and server/.vite/ for React Router SSR
