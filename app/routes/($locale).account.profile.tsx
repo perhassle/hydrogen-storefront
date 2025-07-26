@@ -42,7 +42,7 @@ export async function action({request, context}: ActionFunctionArgs) {
     const customer: CustomerUpdateInput = {};
     const validInputKeys = ['firstName', 'lastName'] as const;
     for (const [key, value] of form.entries()) {
-      if (!validInputKeys.includes(key as any)) {
+      if (!validInputKeys.includes(key as typeof validInputKeys[number])) {
         continue;
       }
       if (typeof value === 'string' && value.length) {
@@ -72,9 +72,10 @@ export async function action({request, context}: ActionFunctionArgs) {
       error: null,
       customer: data?.customerUpdate?.customer,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'An error occurred';
     return data(
-      {error: error.message, customer: null},
+      {error: errorMessage, customer: null},
       {
         status: 400,
       },

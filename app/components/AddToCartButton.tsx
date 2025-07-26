@@ -16,7 +16,7 @@ export function AddToCartButton({
 }) {
   return (
     <CartForm route="/cart" inputs={{lines}} action={CartForm.ACTIONS.LinesAdd}>
-      {(fetcher: FetcherWithComponents<any>) => (
+      {(fetcher: FetcherWithComponents<unknown>) => (
         <>
           <input
             name="analytics"

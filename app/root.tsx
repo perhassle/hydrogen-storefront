@@ -224,7 +224,7 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 
 export function Layout({children}: {children?: React.ReactNode}) {
   const nonce = useNonce();
-  const data = useRouteLoaderData<RootLoader>('root');
+  const data = useRouteLoaderData<typeof loader>('root');
 
   return (
     <html lang="en">
@@ -276,7 +276,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
                 </footer>
               </div>
             ) : (
-              <PageLayout {...(data as any)}>{children}</PageLayout>
+              <PageLayout {...(data as Parameters<typeof PageLayout>[0])}>{children}</PageLayout>
             )}
           </Analytics.Provider>
         ) : (

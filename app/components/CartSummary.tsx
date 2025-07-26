@@ -179,7 +179,7 @@ function UpdateGiftCardForm({
         giftCardCodes: giftCardCodes || [],
       }}
     >
-      {(fetcher: FetcherWithComponents<any>) => {
+      {(fetcher: FetcherWithComponents<unknown>) => {
         const code = fetcher.formData?.get('giftCardCode');
         if (code && saveAppliedCode) {
           saveAppliedCode(code as string);
