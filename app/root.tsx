@@ -308,6 +308,14 @@ export function Layout({children}: {children?: React.ReactNode}) {
         )}
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
+        {/* Register service worker for performance */}
+        <script nonce={nonce} dangerouslySetInnerHTML={{
+          __html: `
+            if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
+              navigator.serviceWorker.register('/sw.js').catch(() => {});
+            }
+          `
+        }} />
       </body>
     </html>
   );

@@ -10,10 +10,19 @@ import {
 } from '@shopify/remix-oxygen';
 import {LoadingPlaceholder} from '~/components/Loading';
 
-// Lazy load the heavy CartMain component
+// Lazy load the heavy CartMain component with error boundary
 const LazyCartMain = lazy(() => import('~/components/CartMain').then(module => ({
   default: module.CartMain
-})));
+})).catch(() => {
+  // Fallback component in case of loading error
+  return {
+    default: () => (
+      <div style={{ padding: '2rem', textAlign: 'center' }}>
+        <p>Cart is temporarily unavailable. Please refresh the page.</p>
+      </div>
+    )
+  };
+}));
 
 export const meta: MetaFunction = () => {
   return [{title: `Hydrogen | Cart`}];

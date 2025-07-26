@@ -21,7 +21,7 @@ export default defineConfig(({command, mode, isSsrBuild}) => {
   if (!isSsrBuild) {
     buildConfig.rollupOptions = {
       output: {
-        manualChunks: (id) => {
+        manualChunks: (id: string) => {
           // Vendor chunk for node_modules
           if (id.includes('node_modules')) {
             // Separate large vendors
