@@ -210,6 +210,13 @@ export default [
       'react-hooks/rules-of-hooks': 'off',
     },
   },
+  {
+    files: ['tests/**/*.ts', 'tests/**/*.spec.ts', '**/*.test.*'],
+    rules: {
+      'no-console': 'off',
+      'react-hooks/rules-of-hooks': 'off',
+    },
+  },
   ...fixupConfigRules(
     compat.extends(
       'plugin:@typescript-eslint/eslint-recommended',

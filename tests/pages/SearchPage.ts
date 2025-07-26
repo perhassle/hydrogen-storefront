@@ -262,7 +262,7 @@ export class SearchPage extends BasePage {
       results.push({
         title: title?.trim(),
         price: price?.trim(),
-        link: link,
+        link,
       });
     }
     
