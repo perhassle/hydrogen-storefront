@@ -2,6 +2,11 @@ import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {useLoaderData, type MetaFunction, Await} from 'react-router';
 import {Suspense} from 'react';
 import {Link} from 'react-router';
+import type {
+  FeaturedCollectionFragment,
+  RecommendedProductFragment,
+  RecommendedProductsQuery,
+} from 'storefrontapi.generated';
 
 export const meta: MetaFunction = () => {
   return [{title: 'Hydrogen | Home'}];
@@ -66,7 +71,7 @@ export default function Homepage() {
 function FeaturedCollection({
   collection,
 }: {
-  collection: any;
+  collection: FeaturedCollectionFragment;
 }) {
   if (!collection) return null;
   const image = collection?.image;
@@ -74,7 +79,7 @@ function FeaturedCollection({
     <div className="featured-collection">
       {image && (
         <div className="featured-collection-image">
-          <img src={image.url} alt={image.altText} />
+          <img src={image.url} alt={image.altText || ''} />
         </div>
       )}
       <h1>{collection.title}</h1>
@@ -85,7 +90,7 @@ function FeaturedCollection({
 function RecommendedProducts({
   products,
 }: {
-  products: Promise<any> | null;
+  products: Promise<RecommendedProductsQuery | null> | null;
 }) {
   return (
     <div className="recommended-products">
@@ -94,7 +99,7 @@ function RecommendedProducts({
         <Await resolve={products}>
           {(response) => (
             <div className="recommended-products-grid">
-              {response?.products?.nodes?.map((product: any) => (
+              {response?.products?.nodes?.map((product: RecommendedProductFragment) => (
                 <RecommendedProduct key={product.id} product={product} />
               ))}
             </div>
@@ -106,7 +111,7 @@ function RecommendedProducts({
   );
 }
 
-function RecommendedProduct({product}: {product: any}) {
+function RecommendedProduct({product}: {product: RecommendedProductFragment}) {
   return (
     <div className="recommended-product bg-white border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-200">
       {product.featuredImage && (
