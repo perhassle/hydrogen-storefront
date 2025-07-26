@@ -6,6 +6,8 @@
  * and that virtual module resolution is working correctly.
  */
 
+/* eslint-disable no-console */
+
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -90,7 +92,7 @@ function validateBuild() {
       process.exit(1);
     }
     console.log(`✅ Vite manifest (${Object.keys(manifest).length} entries)`);
-  } catch (error) {
+  } catch {
     console.error('❌ Build failed: Invalid Vite manifest JSON');
     process.exit(1);
   }
@@ -104,3 +106,5 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 }
 
 export { validateBuild };
+
+/* eslint-enable no-console */
