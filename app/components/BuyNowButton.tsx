@@ -1,7 +1,7 @@
 import {type FetcherWithComponents} from 'react-router';
 import {CartForm, type OptimisticCartLineInput} from '@shopify/hydrogen';
 
-export function AddToCartButton({
+export function BuyNowButton({
   analytics,
   children,
   disabled,
@@ -25,9 +25,15 @@ export function AddToCartButton({
           />
           <button
             type="submit"
-            onClick={onClick}
+            onClick={() => {
+              onClick?.();
+              // Navigate directly to checkout after adding to cart
+              setTimeout(() => {
+                window.location.href = '/cart';
+              }, 100);
+            }}
             disabled={disabled ?? fetcher.state !== 'idle'}
-            className="add-to-cart-btn"
+            className="buy-now-btn"
           >
             {children}
           </button>
