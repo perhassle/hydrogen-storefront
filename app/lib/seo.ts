@@ -16,13 +16,13 @@ export interface BreadcrumbItem {
 }
 
 export interface ProductSeoData {
-  product: Product;
-  selectedVariant?: ProductVariant;
+  product: any; // More flexible type to handle GraphQL response variations
+  selectedVariant?: any;
   url: string;
 }
 
 export interface CollectionSeoData {
-  collection: Collection;
+  collection: any; // More flexible type to handle GraphQL response variations
   url: string;
 }
 

@@ -4,6 +4,8 @@ import {getPaginationVariables, Analytics} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {ProductItem} from '~/components/ProductItem';
+import {Suspense} from 'react';
+import {SkeletonProductGrid, ErrorBoundary} from '~/components/Skeleton';
 import {Breadcrumbs} from '~/components/seo';
 import {
   generateCollectionStructuredData,
@@ -133,18 +135,24 @@ export default function Collection() {
 
         <h1>{collection.title}</h1>
         <p className="collection-description">{collection.description}</p>
-        <PaginatedResourceSection
-          connection={collection.products}
-          resourcesClassName="products-grid"
-        >
-          {({node: product, index}) => (
-            <ProductItem
-              key={product.id}
-              product={product as any} // TODO: Fix typing
-              loading={index < 8 ? 'eager' : undefined}
-            />
-          )}
-        </PaginatedResourceSection>
+        
+        <ErrorBoundary>
+          <Suspense fallback={<SkeletonProductGrid count={8} />}>
+            <PaginatedResourceSection
+              connection={collection.products}
+              resourcesClassName="products-grid"
+            >
+              {({node: product, index}) => (
+                <ProductItem
+                  key={product.id}
+                  product={product as any} // TODO: Fix typing
+                  loading={index < 8 ? 'eager' : undefined}
+                />
+              )}
+            </PaginatedResourceSection>
+          </Suspense>
+        </ErrorBoundary>
+        
         <Analytics.CollectionView
           data={{
             collection: {

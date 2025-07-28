@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Pagination} from '@shopify/hydrogen';
+import {LoadingSpinner, useLoadingDelay} from './Skeleton';
 
 /**
  * <PaginatedResourceSection > is a component that encapsulate how the previous and next behaviors throughout your application.
@@ -23,7 +24,7 @@ export function PaginatedResourceSection<NodesType>({
         return (
           <div>
             <PreviousLink>
-              {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
+              <PaginationLinkContent isLoading={isLoading} direction="previous" />
             </PreviousLink>
             {resourcesClassName ? (
               <div className={resourcesClassName}>{resourcesMarkup}</div>
@@ -31,11 +32,34 @@ export function PaginatedResourceSection<NodesType>({
               resourcesMarkup
             )}
             <NextLink>
-              {isLoading ? 'Loading...' : <span>Load more ↓</span>}
+              <PaginationLinkContent isLoading={isLoading} direction="next" />
             </NextLink>
           </div>
         );
       }}
     </Pagination>
   );
+}
+
+function PaginationLinkContent({ 
+  isLoading, 
+  direction 
+}: { 
+  isLoading: boolean; 
+  direction: 'previous' | 'next';
+}) {
+  const showLoading = useLoadingDelay(isLoading);
+  
+  if (showLoading) {
+    return (
+      <span className="flex items-center gap-2">
+        <LoadingSpinner size="sm" />
+        Loading...
+      </span>
+    );
+  }
+  
+  return direction === 'previous' ? 
+    <span>↑ Load previous</span> : 
+    <span>Load more ↓</span>;
 }
