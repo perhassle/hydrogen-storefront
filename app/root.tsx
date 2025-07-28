@@ -220,7 +220,18 @@ async function loadCriticalData({context}: LoaderFunctionArgs) {
  * Make sure to not throw any errors here, as it will cause the page to 500.
  */
 function loadDeferredData({context}: LoaderFunctionArgs) {
-  const {storefront, customerAccount, cart} = context;
+  const {storefront, customerAccount, cart, env} = context;
+  
+  // Check if we're in local development mode
+  const isLocalDev = env.PUBLIC_STOREFRONT_API_TOKEN === 'mock-token';
+  
+  if (isLocalDev) {
+    return {
+      cart: Promise.resolve(null),
+      isLoggedIn: Promise.resolve(false),
+      footer: Promise.resolve(null),
+    };
+  }
 
   // defer the footer query (below the fold)
   const footer = storefront

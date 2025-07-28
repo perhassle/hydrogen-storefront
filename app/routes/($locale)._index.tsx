@@ -22,6 +22,25 @@ export async function loader(args: LoaderFunctionArgs) {
  * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
  */
 async function loadCriticalData({context}: LoaderFunctionArgs) {
+  const {env} = context;
+  
+  // Check if we're in local development mode
+  const isLocalDev = env.PUBLIC_STOREFRONT_API_TOKEN === 'mock-token';
+  
+  if (isLocalDev) {
+    return {
+      featuredCollection: {
+        id: 'gid://shopify/Collection/1',
+        title: 'Featured Collection',
+        handle: 'featured',
+        image: {
+          url: 'https://via.placeholder.com/400x300?text=Featured+Collection',
+          altText: 'Featured collection',
+        },
+      },
+    };
+  }
+
   const [{collections}] = await Promise.all([
     context.storefront.query(FEATURED_COLLECTION_QUERY),
     // Add other queries here, so that they are loaded in parallel
@@ -38,6 +57,52 @@ async function loadCriticalData({context}: LoaderFunctionArgs) {
  * Make sure to not throw any errors here, as it will cause the page to 500.
  */
 function loadDeferredData({context}: LoaderFunctionArgs) {
+  const {env} = context;
+  
+  // Check if we're in local development mode
+  const isLocalDev = env.PUBLIC_STOREFRONT_API_TOKEN === 'mock-token';
+  
+  if (isLocalDev) {
+    return {
+      recommendedProducts: Promise.resolve({
+        products: {
+          nodes: [
+            {
+              id: 'gid://shopify/Product/1',
+              title: 'Demo Product 1',
+              handle: 'demo-product-1',
+              priceRange: {
+                minVariantPrice: {
+                  amount: '19.99',
+                  currencyCode: 'USD',
+                },
+              },
+              featuredImage: {
+                url: 'https://via.placeholder.com/300x300?text=Product+1',
+                altText: 'Demo Product 1',
+              },
+            },
+            {
+              id: 'gid://shopify/Product/2',
+              title: 'Demo Product 2',
+              handle: 'demo-product-2',
+              priceRange: {
+                minVariantPrice: {
+                  amount: '29.99',
+                  currencyCode: 'USD',
+                },
+              },
+              featuredImage: {
+                url: 'https://via.placeholder.com/300x300?text=Product+2',
+                altText: 'Demo Product 2',
+              },
+            },
+          ],
+        },
+      }),
+    };
+  }
+
   const recommendedProducts = context.storefront
     .query(RECOMMENDED_PRODUCTS_QUERY)
     .catch((error) => {

@@ -4,9 +4,38 @@ import {getPaginationVariables, Analytics} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {ProductItem} from '~/components/ProductItem';
+import {Breadcrumbs} from '~/components/seo';
+import {
+  generateCollectionStructuredData,
+  generateBreadcrumbStructuredData,
+  stripHtml,
+  type BreadcrumbItem,
+} from '~/lib/seo';
 
-export const meta: MetaFunction<typeof loader> = ({data}) => {
-  return [{title: `Hydrogen | ${data?.collection.title ?? ''} Collection`}];
+export const meta: MetaFunction<typeof loader> = ({data, location}) => {
+  if (!data?.collection) {
+    return [{title: 'Collection Not Found'}];
+  }
+
+  const {collection} = data;
+  const title = collection.seo?.title || `${collection.title} Collection`;
+  const description = collection.seo?.description || stripHtml(collection.description || '');
+  const url = location.pathname;
+
+  return [
+    {title},
+    {name: 'description', content: description},
+    {property: 'og:title', content: title},
+    {property: 'og:description', content: description},
+    {property: 'og:type', content: 'website'},
+    {property: 'og:url', content: url},
+    ...(collection.image ? [{property: 'og:image', content: collection.image.url}] : []),
+    {name: 'twitter:card', content: 'summary_large_image'},
+    {name: 'twitter:title', content: title},
+    {name: 'twitter:description', content: description},
+    ...(collection.image ? [{name: 'twitter:image', content: collection.image.url}] : []),
+    {rel: 'canonical', href: url},
+  ];
 };
 
 export async function loader(args: LoaderFunctionArgs) {
@@ -71,31 +100,61 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 export default function Collection() {
   const {collection} = useLoaderData<typeof loader>();
 
+  // Generate breadcrumbs
+  const breadcrumbs: BreadcrumbItem[] = [
+    {name: 'Home', url: '/'},
+    {name: 'Collections', url: '/collections'},
+    {name: collection.title, url: `/collections/${collection.handle}`},
+  ];
+
+  // Generate structured data
+  const collectionStructuredData = generateCollectionStructuredData({
+    collection,
+    url: `/collections/${collection.handle}`,
+  });
+
+  const breadcrumbStructuredData = generateBreadcrumbStructuredData(breadcrumbs);
+
   return (
-    <div className="collection">
-      <h1>{collection.title}</h1>
-      <p className="collection-description">{collection.description}</p>
-      <PaginatedResourceSection
-        connection={collection.products}
-        resourcesClassName="products-grid"
-      >
-        {({node: product, index}) => (
-          <ProductItem
-            key={product.id}
-            product={product}
-            loading={index < 8 ? 'eager' : undefined}
-          />
-        )}
-      </PaginatedResourceSection>
-      <Analytics.CollectionView
-        data={{
-          collection: {
-            id: collection.id,
-            handle: collection.handle,
-          },
+    <>
+      {/* SEO structured data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([collectionStructuredData, breadcrumbStructuredData]),
         }}
       />
-    </div>
+      
+      <div className="collection">
+        {/* Breadcrumbs */}
+        <div className="mb-4">
+          <Breadcrumbs items={breadcrumbs} includeStructuredData={false} />
+        </div>
+
+        <h1>{collection.title}</h1>
+        <p className="collection-description">{collection.description}</p>
+        <PaginatedResourceSection
+          connection={collection.products}
+          resourcesClassName="products-grid"
+        >
+          {({node: product, index}) => (
+            <ProductItem
+              key={product.id}
+              product={product as any} // TODO: Fix typing
+              loading={index < 8 ? 'eager' : undefined}
+            />
+          )}
+        </PaginatedResourceSection>
+        <Analytics.CollectionView
+          data={{
+            collection: {
+              id: collection.id,
+              handle: collection.handle,
+            },
+          }}
+        />
+      </div>
+    </>
   );
 }
 
@@ -143,6 +202,16 @@ const COLLECTION_QUERY = `#graphql
       handle
       title
       description
+      image {
+        url
+        altText
+        width
+        height
+      }
+      seo {
+        title
+        description
+      }
       products(
         first: $first,
         last: $last,

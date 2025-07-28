@@ -3,17 +3,26 @@ import {parseGid} from '@shopify/hydrogen';
 
 export async function loader({request, context}: LoaderFunctionArgs) {
   const url = new URL(request.url);
+  const {env} = context;
+  
+  // Check if we're in local development mode
+  const isLocalDev = env.PUBLIC_STOREFRONT_API_TOKEN === 'mock-token';
+  
+  let shopId: string | undefined;
+  
+  if (isLocalDev) {
+    shopId = 'demo-shop';
+  } else {
+    const {shop} = await context.storefront.query(ROBOTS_QUERY);
+    shopId = parseGid(shop.id).id;
+  }
 
-  const {shop} = await context.storefront.query(ROBOTS_QUERY);
-
-  const shopId = parseGid(shop.id).id;
   const body = robotsTxtData({url: url.origin, shopId});
 
   return new Response(body, {
     status: 200,
     headers: {
       'Content-Type': 'text/plain',
-
       'Cache-Control': `max-age=${60 * 60 * 24}`,
     },
   });
