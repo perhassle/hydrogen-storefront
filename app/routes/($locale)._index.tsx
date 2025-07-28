@@ -2,6 +2,12 @@ import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {useLoaderData, type MetaFunction, Await} from 'react-router';
 import {Suspense} from 'react';
 import {Link} from 'react-router';
+import type {
+  FeaturedCollectionFragment,
+  RecommendedProductFragment,
+  RecommendedProductsQuery,
+} from 'storefrontapi.generated';
+import {SkeletonProductGrid, ErrorBoundary} from '~/components/Skeleton';
 
 export const meta: MetaFunction = () => {
   return [{title: 'Hydrogen | Home'}];
@@ -90,17 +96,19 @@ function RecommendedProducts({
   return (
     <div className="recommended-products">
       <h2>Recommended Products</h2>
-      <Suspense fallback={<div>Loading products...</div>}>
-        <Await resolve={products}>
-          {(response) => (
-            <div className="recommended-products-grid">
-              {response?.products?.nodes?.map((product: any) => (
-                <RecommendedProduct key={product.id} product={product} />
-              ))}
-            </div>
-          )}
-        </Await>
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={<SkeletonProductGrid count={4} className="recommended-products-grid" />}>
+          <Await resolve={products}>
+            {(response) => (
+              <div className="recommended-products-grid">
+                {response?.products?.nodes?.map((product: RecommendedProductFragment) => (
+                  <RecommendedProduct key={product.id} product={product} />
+                ))}
+              </div>
+            )}
+          </Await>
+        </Suspense>
+      </ErrorBoundary>
       <br />
     </div>
   );

@@ -1,11 +1,13 @@
+import * as React from 'react';
 import type {CartLineUpdateInput} from '@shopify/hydrogen/storefront-api-types';
 import type {CartLayout} from '~/components/CartMain';
 import {CartForm, Image, type OptimisticCartLine} from '@shopify/hydrogen';
 import {useVariantUrl} from '~/lib/variants';
-import {Link} from 'react-router';
+import {Link, useFetcher} from 'react-router';
 import {ProductPrice} from './ProductPrice';
 import {useAside} from './Aside';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
+import {LoadingButton, useLoadingDelay} from './Skeleton';
 
 type CartLine = OptimisticCartLine<CartApiQueryFragment>;
 
@@ -128,9 +130,18 @@ function CartLineRemoveButton({
       action={CartForm.ACTIONS.LinesRemove}
       inputs={{lineIds}}
     >
-      <button disabled={disabled} type="submit">
-        Remove
-      </button>
+      {(fetcher) => (
+        <LoadingButton
+          disabled={disabled}
+          type="submit"
+          loading={fetcher.state !== 'idle'}
+          loadingText="Removing..."
+          variant="danger"
+          size="sm"
+        >
+          Remove
+        </LoadingButton>
+      )}
     </CartForm>
   );
 }
@@ -151,9 +162,29 @@ function CartLineUpdateButton({
       action={CartForm.ACTIONS.LinesUpdate}
       inputs={{lines}}
     >
-      {children}
+      {(fetcher) => (
+        <CartUpdateButtonContent fetcher={fetcher}>
+          {children}
+        </CartUpdateButtonContent>
+      )}
     </CartForm>
   );
+}
+
+function CartUpdateButtonContent({
+  fetcher,
+  children,
+}: {
+  fetcher: any;
+  children: React.ReactNode;
+}) {
+  const isLoading = fetcher.state !== 'idle';
+  const showLoading = useLoadingDelay(isLoading);
+  
+  return React.cloneElement(children as React.ReactElement, {
+    disabled: (children as React.ReactElement).props.disabled || showLoading,
+    className: `cart-line-quantity button ${showLoading ? 'loading' : ''}`,
+  });
 }
 
 /**
