@@ -310,7 +310,7 @@ button.reset:hover:not(:has(> *)) {
 
 .footer-menu a {
   color: var(--color-light);
-  min-width: fit-content;
+  min-width: max-content;
 }
 
 /*

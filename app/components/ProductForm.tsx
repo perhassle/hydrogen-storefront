@@ -47,18 +47,15 @@ export function ProductForm({
                   // as an anchor tag
                   return (
                     <Link
-                      className="product-options-item"
+                      className={`product-options-item${
+                        selected ? ' selected' : ''
+                      }${!available ? ' unavailable' : ''}`}
                       key={option.name + name}
                       prefetch="intent"
                       preventScrollReset
                       replace
                       to={`/products/${handle}?${variantUriQuery}`}
-                      style={{
-                        border: selected
-                          ? '1px solid black'
-                          : '1px solid transparent',
-                        opacity: available ? 1 : 0.3,
-                      }}
+                      aria-label={`Select ${name} option`}
                     >
                       <ProductOptionSwatch swatch={swatch} name={name} />
                     </Link>
@@ -74,15 +71,12 @@ export function ProductForm({
                       type="button"
                       className={`product-options-item${
                         exists && !selected ? ' link' : ''
-                      }`}
+                      }${
+                        selected ? ' selected' : ''
+                      }${!available ? ' unavailable' : ''}`}
                       key={option.name + name}
-                      style={{
-                        border: selected
-                          ? '1px solid black'
-                          : '1px solid transparent',
-                        opacity: available ? 1 : 0.3,
-                      }}
                       disabled={!exists}
+                      aria-label={`Select ${name} option`}
                       onClick={() => {
                         if (!selected) {
                           try {
@@ -169,10 +163,8 @@ function ProductOptionSwatch({
   return (
     <div
       aria-label={name}
-      className="product-option-label-swatch"
-      style={{
-        backgroundColor: color || 'transparent',
-      }}
+      className={`product-option-label-swatch${color ? ' has-color' : ''}`}
+      {...(color && { 'data-color': color })}
     >
       {!!image && <img src={image} alt={name} />}
     </div>
