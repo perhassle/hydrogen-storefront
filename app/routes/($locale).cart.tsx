@@ -1,4 +1,5 @@
 import {type MetaFunction, useLoaderData} from 'react-router';
+import {Suspense, lazy} from 'react';
 import type {CartQueryDataReturn} from '@shopify/hydrogen';
 import {CartForm} from '@shopify/hydrogen';
 import {
@@ -7,7 +8,21 @@ import {
   type ActionFunctionArgs,
   type HeadersFunction,
 } from '@shopify/remix-oxygen';
-import {CartMain} from '~/components/CartMain';
+import {LoadingPlaceholder} from '~/components/Loading';
+
+// Lazy load the heavy CartMain component with error boundary
+const LazyCartMain = lazy(() => import('~/components/CartMain').then(module => ({
+  default: module.CartMain
+})).catch(() => {
+  // Fallback component in case of loading error
+  return {
+    default: () => (
+      <div style={{ padding: '2rem', textAlign: 'center' }}>
+        <p>Cart is temporarily unavailable. Please refresh the page.</p>
+      </div>
+    )
+  };
+}));
 
 export const meta: MetaFunction = () => {
   return [{title: `Hydrogen | Cart`}];
@@ -111,7 +126,9 @@ export default function Cart() {
   return (
     <div className="cart">
       <h1>Cart</h1>
-      <CartMain layout="page" cart={cart} />
+      <Suspense fallback={<LoadingPlaceholder height="400px" />}>
+        <LazyCartMain layout="page" cart={cart} />
+      </Suspense>
     </div>
   );
 }
