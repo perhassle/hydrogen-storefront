@@ -72,7 +72,7 @@ export default function Homepage() {
 function FeaturedCollection({
   collection,
 }: {
-  collection: FeaturedCollectionFragment;
+  collection: any;
 }) {
   if (!collection) return null;
   const image = collection?.image;
@@ -80,7 +80,7 @@ function FeaturedCollection({
     <div className="featured-collection">
       {image && (
         <div className="featured-collection-image">
-          <img src={image.url} alt={image.altText || ''} />
+          <img src={image.url} alt={image.altText} />
         </div>
       )}
       <h1>{collection.title}</h1>
@@ -91,7 +91,7 @@ function FeaturedCollection({
 function RecommendedProducts({
   products,
 }: {
-  products: Promise<RecommendedProductsQuery | null> | null;
+  products: Promise<any> | null;
 }) {
   return (
     <div className="recommended-products">
@@ -114,7 +114,7 @@ function RecommendedProducts({
   );
 }
 
-function RecommendedProduct({product}: {product: RecommendedProductFragment}) {
+function RecommendedProduct({product}: {product: any}) {
   return (
     <div className="recommended-product bg-white border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-200">
       {product.featuredImage && (
@@ -127,9 +127,7 @@ function RecommendedProduct({product}: {product: RecommendedProductFragment}) {
         </Link>
       )}
       <h3 className="text-lg font-semibold mb-2">
-
-        <Link to={`/products/${product.handle}`} className="hover:text-green-600">
-
+        <Link to={`/products/${product.handle}`} className="hover:text-blue-600">
           {product.title}
         </Link>
       </h3>
@@ -138,9 +136,7 @@ function RecommendedProduct({product}: {product: RecommendedProductFragment}) {
       </p>
       <Link 
         to={`/products/${product.handle}`}
-
-        className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200 w-full inline-block text-center"
-
+        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200 w-full inline-block text-center"
       >
         View Product
       </Link>

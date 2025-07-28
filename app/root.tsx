@@ -63,7 +63,27 @@ export function links() {
       rel: 'preconnect',
       href: 'https://shop.app',
     },
+    {
+      rel: 'dns-prefetch',
+      href: 'https://fonts.googleapis.com',
+    },
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
+    // Preload critical CSS
+    {
+      rel: 'preload',
+      href: tailwindCss,
+      as: 'style',
+    },
+    {
+      rel: 'preload',
+      href: resetStyles,
+      as: 'style',
+    },
+    {
+      rel: 'preload',
+      href: appStyles,
+      as: 'style',
+    },
   ];
 }
 
@@ -224,13 +244,17 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 
 export function Layout({children}: {children?: React.ReactNode}) {
   const nonce = useNonce();
-  const data = useRouteLoaderData<typeof loader>('root');
+  const data = useRouteLoaderData<RootLoader>('root');
 
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        {/* Performance and SEO optimizations */}
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta httpEquiv="x-dns-prefetch-control" content="on" />
         <link rel="stylesheet" href={tailwindCss}></link>
         <link rel="stylesheet" href={resetStyles}></link>
         <link rel="stylesheet" href={appStyles}></link>
@@ -276,7 +300,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
                 </footer>
               </div>
             ) : (
-              <PageLayout {...(data as Parameters<typeof PageLayout>[0])}>{children}</PageLayout>
+              <PageLayout {...(data as any)}>{children}</PageLayout>
             )}
           </Analytics.Provider>
         ) : (
@@ -284,6 +308,14 @@ export function Layout({children}: {children?: React.ReactNode}) {
         )}
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
+        {/* Register service worker for performance */}
+        <script nonce={nonce} dangerouslySetInnerHTML={{
+          __html: `
+            if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
+              navigator.serviceWorker.register('/sw.js').catch(() => {});
+            }
+          `
+        }} />
       </body>
     </html>
   );
