@@ -7,7 +7,9 @@ import type {
 } from 'storefrontapi.generated';
 import {useVariantUrl} from '~/lib/variants';
 import {useLazyLoading} from '~/lib/intersection-observer';
-import {WishlistButton} from './WishlistButton';
+
+import {useAside} from './Aside';
+
 
 export function ProductItem({
   product,
@@ -24,6 +26,7 @@ export function ProductItem({
   const variantUrl = useVariantUrl(product.handle);
   const image = product.featuredImage;
   const [ref, isIntersecting, hasIntersected] = useLazyLoading();
+  const {openQuickView} = useAside();
 
   // Determine actual loading strategy
   const shouldLoad = !enableLazyLoading || loading === 'eager' || hasIntersected;
@@ -36,6 +39,13 @@ export function ProductItem({
   const quantityAvailable = hasQuantityData ? firstVariant.quantityAvailable : null;
   const hasLimitedStock = quantityAvailable && quantityAvailable <= 10 && quantityAvailable > 0;
   const isLowStock = quantityAvailable && quantityAvailable < 5;
+
+  const handleQuickView = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // Type assertion since we know this is a product with the required fields
+    openQuickView(product as any);
+  };
 
   return (
     <div ref={ref} className="relative">
@@ -64,23 +74,16 @@ export function ProductItem({
                 Only {quantityAvailable} left!
               </div>
             )}
-            {/* Wishlist button overlay */}
-            <div className="absolute top-2 right-2 z-10">
-              <WishlistButton
-                product={{
-                  id: product.id,
-                  handle: product.handle,
-                  title: product.title,
-                  featuredImage: image ? {
-                    url: image.url,
-                    altText: image.altText,
-                  } : null,
-                  priceRange: product.priceRange,
-                }}
-                size="md"
-                className="bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-sm"
-              />
-            </div>
+
+            {/* Quick View Button */}
+            <button
+              className="product-item-quick-view"
+              onClick={handleQuickView}
+              aria-label={`Quick view ${product.title}`}
+            >
+              Quick View
+            </button>
+
           </div>
         )}
         {image && !shouldLoad && (

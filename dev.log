@@ -284,3 +284,19 @@ TypeError: Cannot read properties of undefined (reading 'length')
    GET  200  render  /products/beanie.data?Color=Olive&_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  953ms  prefetch
   POST  200  render  /cart.data  921ms
    GET  200  render  /products/light-puffer.data?addToCart=true  3ms
+   GET  200  render  /cart  84ms
+   GET  200  render  /collections/men  88ms
+   GET  200  render  /__manifest?p=%2F&p=%2Faccount&p=%2Fblogs%2Fnews&p=%2Fcollections&p=%2Fcollections%2Fmen&p=%2Fcollections%2Funisex&p=%2Fcollections%2Fwomen&p=%2Fpolicies%2Fprivacy-policy&p=%2Fpolicies%2Frefund-policy&p=%2Fpolicies%2Fshipping-policy&p=%2Fpolicies%2Fterms-of-service&version=0.15416054433044857  4ms
+   GET  200  render  /products/light-puffer?addToCart=true&Size=Small&Color=Green  511ms
+   GET  200  render  /__manifest?p=%2F&p=%2Faccount&p=%2Fblogs%2Fnews&p=%2Fcart&p=%2Fcollections&p=%2Fcollections%2Fmen&p=%2Fcollections%2Funisex&p=%2Fcollections%2Fwomen&p=%2Fpolicies%2Fprivacy-policy&p=%2Fpolicies%2Frefund-policy&p=%2Fpolicies%2Fshipping-policy&p=%2Fpolicies%2Fterms-of-service&p=%2Fproducts%2Fbeanie&p=%2Fproducts%2Fhigh-top-sneakers&p=%2Fproducts%2Fhoodie-old&p=%2Fproducts%2Flight-puffer&p=%2Fproducts%2Fmen-t-shirt&version=0.15416054433044857  4ms
+   GET  200  render  /__manifest?p=%2F&p=%2Faccount&p=%2Fblogs%2Fnews&p=%2Fcart&p=%2Fcollections&p=%2Fcollections%2Fmen&p=%2Fcollections%2Funisex&p=%2Fcollections%2Fwomen&p=%2Fpolicies%2Fprivacy-policy&p=%2Fpolicies%2Frefund-policy&p=%2Fpolicies%2Fshipping-policy&p=%2Fpolicies%2Fterms-of-service&p=%2Fproducts%2Fbeanie&p=%2Fproducts%2Fgray-leather-sneakers&p=%2Fproducts%2Fhigh-top-sneakers&p=%2Fproducts%2Fhoodie-old&p=%2Fproducts%2Flight-puffer&p=%2Fproducts%2Fmen-crewneck&p=%2Fproducts%2Fmen-t-shirt&p=%2Fproducts%2Fshorts&p=%2Fproducts%2Fsweatpants&p=%2Fproducts%2Fwhite-leather-sneakers&version=0.15416054433044857  5ms
+3:34:37 PM [react-router] Route config changed.
+3:34:37 PM [react-router] Config saved
+Error: ENOTEMPTY: directory not empty, rmdir '/Users/perhassle/source/poc/AI/shopify/hydrogen01/hydrogen-storefront/.react-router/types'
+    at Object.rmdirSync (node:fs:1215:11)
+    at _rmdirSync (node:internal/fs/rimraf:262:21)
+    at rimrafSync (node:internal/fs/rimraf:195:7)
+    at Object.rmSync (node:fs:1264:10)
+    at writeAll (/Users/perhassle/source/poc/AI/shopify/hydrogen01/hydrogen-storefront/node_modules/@react-router/dev/dist/vite.js:969:27)
+    at /Users/perhassle/source/poc/AI/shopify/hydrogen01/hydrogen-storefront/node_modules/@react-router/dev/dist/vite.js:938:15
+    at FSWatcher.<anonymous> (/Users/perhassle/source/poc/AI/shopify/hydrogen01/hydrogen-storefront/node_modules/@react-router/dev/dist/vite.js:645:13)
