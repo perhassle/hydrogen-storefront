@@ -18,8 +18,10 @@ import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import {PageLayout} from './components/PageLayout';
+
 import {Aside, useAside} from './components/Aside';
 import {ProductQuickView} from './components/ProductQuickView';
+
 
 export type RootLoader = typeof loader;
 
@@ -270,10 +272,13 @@ export function Layout({children}: {children?: React.ReactNode}) {
             shop={data.shop}
             consent={data.consent}
           >
+            <WishlistProvider>
             {data.header?.shop?.name === 'Demo Shop' ? (
+
               // Simple layout for local development with AsideProvider for quick view
               <Aside.Provider>
                 <DemoQuickViewAside />
+
                 <div className="min-h-screen bg-gray-50">
                   <header className="bg-white shadow-sm border-b">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -288,8 +293,10 @@ export function Layout({children}: {children?: React.ReactNode}) {
                           <a href="/collections/all" className="text-gray-500 hover:text-gray-900">
                             Products
                           </a>
+
                           <a href="/quick-view-demo" className="text-gray-500 hover:text-gray-900">
                             Quick View Demo
+
                           </a>
                         </nav>
                       </div>
@@ -306,10 +313,13 @@ export function Layout({children}: {children?: React.ReactNode}) {
                     </div>
                   </footer>
                 </div>
+
               </Aside.Provider>
+
             ) : (
               <PageLayout {...(data as any)}>{children}</PageLayout>
             )}
+            </WishlistProvider>
           </Analytics.Provider>
         ) : (
           children

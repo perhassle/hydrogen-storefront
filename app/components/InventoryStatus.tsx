@@ -76,7 +76,7 @@ export function InventoryStatus({selectedVariant, product, className = ''}: Inve
     }
     return (
       <div className={`inventory-status in-stock ${className}`}>
-        <span className="status-indicator">✅</span>
+        <span className="status-indicator">🟠</span>
         <span className="status-text">In Stock</span>
       </div>
     );
@@ -92,23 +92,12 @@ export function InventoryStatus({selectedVariant, product, className = ''}: Inve
     );
   }
 
-  if (quantityAvailable < 5) {
+  if (quantityAvailable < 10) {
     return (
-      <div className={`inventory-status low-stock ${className}`}>
+      <div className={`inventory-status low-stock urgent ${className}`}>
         <span className="status-indicator">⚠️</span>
         <span className="status-text">
-          Only {quantityAvailable} left in stock!
-        </span>
-      </div>
-    );
-  }
-
-  if (quantityAvailable <= 10) {
-    return (
-      <div className={`inventory-status limited-stock ${className}`}>
-        <span className="status-indicator">📦</span>
-        <span className="status-text">
-          {quantityAvailable} in stock
+          Only {quantityAvailable} left - Order now!
         </span>
       </div>
     );
@@ -116,8 +105,8 @@ export function InventoryStatus({selectedVariant, product, className = ''}: Inve
 
   return (
     <div className={`inventory-status in-stock ${className}`}>
-      <span className="status-indicator">✅</span>
-      <span className="status-text">In Stock</span>
+      <span className="status-indicator">🟠</span>
+      <span className="status-text">{quantityAvailable} in stock</span>
     </div>
   );
 }

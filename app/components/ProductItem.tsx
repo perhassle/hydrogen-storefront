@@ -7,7 +7,9 @@ import type {
 } from 'storefrontapi.generated';
 import {useVariantUrl} from '~/lib/variants';
 import {useLazyLoading} from '~/lib/intersection-observer';
+
 import {useAside} from './Aside';
+
 
 export function ProductItem({
   product,
@@ -46,7 +48,7 @@ export function ProductItem({
   };
 
   return (
-    <div ref={ref}>
+    <div ref={ref} className="relative">
       <Link
         className="product-item"
         key={product.id}
@@ -54,7 +56,7 @@ export function ProductItem({
         to={variantUrl}
       >
         {image && shouldLoad && (
-          <div className="product-item-image-container">
+          <div className="product-item-image-container relative">
             <Image
               alt={image.altText || product.title}
               aspectRatio="1/1"
@@ -72,6 +74,7 @@ export function ProductItem({
                 Only {quantityAvailable} left!
               </div>
             )}
+
             {/* Quick View Button */}
             <button
               className="product-item-quick-view"
@@ -80,6 +83,7 @@ export function ProductItem({
             >
               Quick View
             </button>
+
           </div>
         )}
         {image && !shouldLoad && (
@@ -108,16 +112,20 @@ export function ProductItem({
             <span>⭕</span> Out of Stock
           </div>
         ) : isLowStock && quantityAvailable ? (
-          <div className="product-item-status low-stock">
-            <span>⚠️</span> {quantityAvailable} left
+          <div className="product-item-status low-stock urgent">
+            <span>⚠️</span> Only {quantityAvailable} left - Order now!
           </div>
         ) : hasLimitedStock && quantityAvailable ? (
           <div className="product-item-status limited-stock">
             <span>📦</span> {quantityAvailable} in stock
           </div>
+        ) : quantityAvailable ? (
+          <div className="product-item-status in-stock">
+            <span>🟠</span> {quantityAvailable} in stock
+          </div>
         ) : (
           <div className="product-item-status in-stock">
-            <span>✅</span> In Stock
+            <span>🟠</span> In Stock
           </div>
         )}
       </Link>
