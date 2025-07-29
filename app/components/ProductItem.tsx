@@ -7,6 +7,7 @@ import type {
 } from 'storefrontapi.generated';
 import {useVariantUrl} from '~/lib/variants';
 import {useLazyLoading} from '~/lib/intersection-observer';
+import {WishlistButton} from './WishlistButton';
 
 export function ProductItem({
   product,
@@ -37,7 +38,7 @@ export function ProductItem({
   const isLowStock = quantityAvailable && quantityAvailable < 5;
 
   return (
-    <div ref={ref}>
+    <div ref={ref} className="relative">
       <Link
         className="product-item"
         key={product.id}
@@ -45,7 +46,7 @@ export function ProductItem({
         to={variantUrl}
       >
         {image && shouldLoad && (
-          <div className="product-item-image-container">
+          <div className="product-item-image-container relative">
             <Image
               alt={image.altText || product.title}
               aspectRatio="1/1"
@@ -63,6 +64,23 @@ export function ProductItem({
                 Only {quantityAvailable} left!
               </div>
             )}
+            {/* Wishlist button overlay */}
+            <div className="absolute top-2 right-2 z-10">
+              <WishlistButton
+                product={{
+                  id: product.id,
+                  handle: product.handle,
+                  title: product.title,
+                  featuredImage: image ? {
+                    url: image.url,
+                    altText: image.altText,
+                  } : null,
+                  priceRange: product.priceRange,
+                }}
+                size="md"
+                className="bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-sm"
+              />
+            </div>
           </div>
         )}
         {image && !shouldLoad && (

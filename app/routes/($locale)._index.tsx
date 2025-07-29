@@ -8,6 +8,7 @@ import type {
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
 import {SkeletonProductGrid, ErrorBoundary} from '~/components/Skeleton';
+import {WishlistButton} from '~/components/WishlistButton';
 
 export const meta: MetaFunction = () => {
   return [{title: 'Hydrogen | Home'}];
@@ -116,15 +117,34 @@ function RecommendedProducts({
 
 function RecommendedProduct({product}: {product: any}) {
   return (
-    <div className="recommended-product bg-white border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-200">
+    <div className="recommended-product bg-white border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-200 relative">
       {product.featuredImage && (
-        <Link to={`/products/${product.handle}`}>
-          <img
-            src={product.featuredImage.url}
-            alt={product.featuredImage.altText || product.title}
-            className="w-full h-48 object-cover rounded-lg mb-4"
-          />
-        </Link>
+        <div className="relative">
+          <Link to={`/products/${product.handle}`}>
+            <img
+              src={product.featuredImage.url}
+              alt={product.featuredImage.altText || product.title}
+              className="w-full h-48 object-cover rounded-lg mb-4"
+            />
+          </Link>
+          {/* Wishlist button overlay */}
+          <div className="absolute top-2 right-2">
+            <WishlistButton
+              product={{
+                id: product.id,
+                handle: product.handle,
+                title: product.title,
+                featuredImage: product.featuredImage ? {
+                  url: product.featuredImage.url,
+                  altText: product.featuredImage.altText,
+                } : null,
+                priceRange: product.priceRange,
+              }}
+              size="md"
+              className="bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-sm"
+            />
+          </div>
+        </div>
       )}
       <h3 className="text-lg font-semibold mb-2">
         <Link to={`/products/${product.handle}`} className="hover:text-blue-600">

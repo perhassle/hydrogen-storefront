@@ -14,6 +14,7 @@ import {ProductForm} from '~/components/ProductForm';
 import {InventoryStatus} from '~/components/InventoryStatus';
 import {BackInStockNotification} from '~/components/BackInStockNotification';
 import {PreOrderButton} from '~/components/PreOrderButton';
+import {WishlistButton} from '~/components/WishlistButton';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
@@ -112,7 +113,25 @@ export default function Product() {
         priority={true}
       />
       <div className="product-main">
-        <h1>{title}</h1>
+        <div className="flex justify-between items-start mb-4">
+          <h1 className="flex-grow">{title}</h1>
+          <WishlistButton
+            product={{
+              id: product.id,
+              handle: product.handle,
+              title: product.title,
+              featuredImage: selectedVariant?.image ? {
+                url: selectedVariant.image.url,
+                altText: selectedVariant.image.altText,
+              } : null,
+              priceRange: {
+                minVariantPrice: selectedVariant?.price || { amount: '0', currencyCode: 'USD' },
+              },
+            }}
+            size="lg"
+            className="ml-4"
+          />
+        </div>
         <ProductPrice
           price={selectedVariant?.price}
           compareAtPrice={selectedVariant?.compareAtPrice}
