@@ -28,8 +28,9 @@ export function BuyNowButton({
             onClick={() => {
               onClick?.();
               // Navigate directly to checkout after adding to cart
+              const navigate = useNavigate();
               setTimeout(() => {
-                window.location.href = '/cart';
+                navigate('/cart');
               }, 100);
             }}
             disabled={disabled ?? fetcher.state !== 'idle'}
