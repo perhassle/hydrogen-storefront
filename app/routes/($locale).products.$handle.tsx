@@ -11,6 +11,9 @@ import {
 import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
+import {InventoryStatus} from '~/components/InventoryStatus';
+import {BackInStockNotification} from '~/components/BackInStockNotification';
+import {PreOrderButton} from '~/components/PreOrderButton';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
@@ -114,11 +117,28 @@ export default function Product() {
           price={selectedVariant?.price}
           compareAtPrice={selectedVariant?.compareAtPrice}
         />
+        
+        {/* Inventory Status Display */}
+        <InventoryStatus selectedVariant={selectedVariant} product={product} />
+        
         <br />
         <ProductForm
           productOptions={productOptions}
           selectedVariant={selectedVariant}
         />
+        
+        {/* Back-in-Stock Notification for out-of-stock items */}
+        <BackInStockNotification 
+          product={product}
+          selectedVariant={selectedVariant}
+        />
+        
+        {/* Pre-order option for out-of-stock items */}
+        <PreOrderButton 
+          product={product}
+          selectedVariant={selectedVariant}
+        />
+        
         <br />
         <br />
         <p>
@@ -171,6 +191,7 @@ const PRODUCT_VARIANT_FRAGMENT = `#graphql
       title
       handle
     }
+    quantityAvailable
     selectedOptions {
       name
       value
