@@ -632,3 +632,247 @@ button.reset:hover:not(:has(> *)) {
   background-size: 200% 100%;
   animation: loading-shimmer 1.5s infinite;
 }
+
+/*
+* --------------------------------------------------
+* Inventory Management Components
+* --------------------------------------------------
+*/
+
+/* Inventory Status Component */
+.inventory-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.inventory-status .status-indicator {
+  font-size: 1rem;
+}
+
+.inventory-status.in-stock .status-text {
+  color: #16a34a;
+}
+
+.inventory-status.limited-stock .status-text {
+  color: #ca8a04;
+}
+
+.inventory-status.low-stock .status-text {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.inventory-status.out-of-stock .status-text {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* Back In Stock Notification Component */
+.back-in-stock-notification {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background-color: #f9fafb;
+}
+
+.back-in-stock-notification.success {
+  background-color: #f0f9ff;
+  border-color: #0ea5e9;
+}
+
+.notification-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.notification-icon {
+  font-size: 1.5rem;
+}
+
+.success-icon {
+  font-size: 1.5rem;
+  color: #16a34a;
+}
+
+.notification-content h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.notification-content p {
+  margin: 0 0 1rem 0;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.notification-form {
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.email-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.email-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.notify-button {
+  padding: 0.5rem 1rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.notify-button:hover:not(:disabled) {
+  background-color: #2563eb;
+}
+
+.notify-button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Pre-order Button Component */
+.pre-order-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: #7c3aed;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 0.5rem;
+}
+
+.pre-order-button:hover:not(:disabled) {
+  background-color: #6d28d9;
+}
+
+.pre-order-button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.pre-order-icon {
+  font-size: 1rem;
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.pre-order-confirmation {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #16a34a;
+  border-radius: 8px;
+  background-color: #f0fdf4;
+}
+
+.confirmation-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.confirmation-content h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #16a34a;
+}
+
+.confirmation-content p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #15803d;
+}
+
+/* Product Item Inventory Status */
+.product-item-image-container {
+  position: relative;
+}
+
+.product-item-stock-overlay {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  z-index: 1;
+}
+
+.product-item-stock-overlay.out-of-stock {
+  background-color: rgba(220, 38, 38, 0.9);
+}
+
+.product-item-stock-overlay.low-stock {
+  background-color: rgba(220, 38, 38, 0.9);
+}
+
+.product-item-status {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+.product-item-status.in-stock {
+  color: #16a34a;
+}
+
+.product-item-status.limited-stock {
+  color: #ca8a04;
+}
+
+.product-item-status.low-stock {
+  color: #dc2626;
+}
+
+.product-item-status.out-of-stock {
+  color: #dc2626;
+}

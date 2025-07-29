@@ -172,6 +172,7 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
     id
     title
     handle
+    availableForSale
     priceRange {
       minVariantPrice {
         amount
@@ -189,6 +190,7 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
       nodes {
         id
         availableForSale
+        quantityAvailable
         selectedOptions {
           name
           value

@@ -28,6 +28,14 @@ export function ProductItem({
   const shouldLoad = !enableLazyLoading || loading === 'eager' || hasIntersected;
   const imageLoading = loading === 'eager' ? 'eager' : (shouldLoad ? 'lazy' : undefined);
 
+  // Get the first available variant to check stock status
+  const firstVariant = product.variants?.nodes?.[0];
+  const isOutOfStock = 'availableForSale' in product ? !product.availableForSale : !firstVariant?.availableForSale;
+  const hasQuantityData = firstVariant && 'quantityAvailable' in firstVariant;
+  const quantityAvailable = hasQuantityData ? firstVariant.quantityAvailable : null;
+  const hasLimitedStock = quantityAvailable && quantityAvailable <= 10 && quantityAvailable > 0;
+  const isLowStock = quantityAvailable && quantityAvailable < 5;
+
   return (
     <div ref={ref}>
       <Link
@@ -37,13 +45,25 @@ export function ProductItem({
         to={variantUrl}
       >
         {image && shouldLoad && (
-          <Image
-            alt={image.altText || product.title}
-            aspectRatio="1/1"
-            data={image}
-            loading={imageLoading}
-            sizes="(min-width: 45em) 400px, 100vw"
-          />
+          <div className="product-item-image-container">
+            <Image
+              alt={image.altText || product.title}
+              aspectRatio="1/1"
+              data={image}
+              loading={imageLoading}
+              sizes="(min-width: 45em) 400px, 100vw"
+            />
+            {isOutOfStock && (
+              <div className="product-item-stock-overlay out-of-stock">
+                Out of Stock
+              </div>
+            )}
+            {!isOutOfStock && isLowStock && quantityAvailable && (
+              <div className="product-item-stock-overlay low-stock">
+                Only {quantityAvailable} left!
+              </div>
+            )}
+          </div>
         )}
         {image && !shouldLoad && (
           <div 
@@ -64,6 +84,25 @@ export function ProductItem({
         <small>
           <Money data={product.priceRange.minVariantPrice} />
         </small>
+        
+        {/* Stock status indicator for product items */}
+        {isOutOfStock ? (
+          <div className="product-item-status out-of-stock">
+            <span>⭕</span> Out of Stock
+          </div>
+        ) : isLowStock && quantityAvailable ? (
+          <div className="product-item-status low-stock">
+            <span>⚠️</span> {quantityAvailable} left
+          </div>
+        ) : hasLimitedStock && quantityAvailable ? (
+          <div className="product-item-status limited-stock">
+            <span>📦</span> {quantityAvailable} in stock
+          </div>
+        ) : (
+          <div className="product-item-status in-stock">
+            <span>✅</span> In Stock
+          </div>
+        )}
       </Link>
     </div>
   );
