@@ -5,10 +5,11 @@ import type {
   FooterQuery,
   HeaderQuery,
 } from 'storefrontapi.generated';
-import {Aside} from '~/components/Aside';
+import {Aside, useAside} from '~/components/Aside';
 import {Footer} from '~/components/Footer';
 import {Header, HeaderMenu} from '~/components/Header';
 import {CartMain} from '~/components/CartMain';
+import {ProductQuickView} from '~/components/ProductQuickView';
 import {
   SEARCH_ENDPOINT,
   SearchFormPredictive,
@@ -37,6 +38,7 @@ export function PageLayout({
       <CartAside cart={cart} />
       <SearchAside />
       <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
+      <QuickViewAside />
       {header && (
         <Header
           header={header}
@@ -170,5 +172,19 @@ function MobileMenuAside({
         />
       </Aside>
     )
+  );
+}
+
+function QuickViewAside() {
+  const {quickViewProduct, close} = useAside();
+  
+  return (
+    <Aside type="quickview" heading="QUICK VIEW">
+      {quickViewProduct ? (
+        <ProductQuickView product={quickViewProduct} onClose={close} />
+      ) : (
+        <p>Loading product...</p>
+      )}
+    </Aside>
   );
 }
