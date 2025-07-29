@@ -55,16 +55,19 @@ export function WishlistButton({
   };
 
   const sizeClasses = {
-    sm: 'w-5 h-5',
-    md: 'w-6 h-6',
-    lg: 'w-8 h-8',
+    sm: 'w-6 h-6',
+    md: 'w-8 h-8',
+    lg: 'w-10 h-10',
   };
 
   const buttonClasses = `
     inline-flex items-center justify-center
     transition-all duration-200 ease-in-out
-    hover:scale-110 active:scale-95
+    hover:scale-125 hover:bg-red-50 hover:rounded-full
+    active:scale-95
     focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500
+    p-2 rounded-full
+    cursor-pointer
     ${sizeClasses[size]}
     ${isAnimating ? 'animate-pulse' : ''}
     ${className}
@@ -72,10 +75,10 @@ export function WishlistButton({
 
   const heartClasses = `
     ${sizeClasses[size]}
-    transition-colors duration-200
+    transition-all duration-200
     ${inWishlist 
-      ? 'text-red-500 fill-current' 
-      : 'text-gray-400 hover:text-red-400'
+      ? 'text-red-500 fill-current hover:text-red-600' 
+      : 'text-gray-400 hover:text-red-500'
     }
   `;
 

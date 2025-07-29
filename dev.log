@@ -1,0 +1,286 @@
+
+> hydrogen-storefront@2025.5.1 dev
+> shopify hydrogen dev --codegen
+
+
+Environment variables injected into MiniOxygen:
+
+SESSION_SECRET                  from local .env
+PUBLIC_STORE_DOMAIN             from local .env
+PUBLIC_STOREFRONT_API_TOKEN     from local .env
+PUBLIC_STOREFRONT_ID            from local .env
+PUBLIC_CHECKOUT_DOMAIN          from local .env
+PUBLIC_STOREFRONT_API_VERSION   from local .env
+
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: use --host to expose
+
+
+╭─ success ────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  View Hydrogen app: http://localhost:3000/                                   │
+│                                                                              │
+│  View GraphiQL API browser:                                                  │
+│  http://localhost:3000/graphiql                                              │
+│                                                                              │
+│  View server network requests:                                               │
+│  http://localhost:3000/subrequest-profiler                                   │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+   GET  200  render  /  1298ms
+   GET  200  render  /__manifest?p=%2F&p=%2Faccount&p=%2Fblogs%2Fnews&p=%2Fcollections&p=%2Fcollections%2Fmen&p=%2Fcollections%2Funisex&p=%2Fcollections%2Fwomen&p=%2Fpolicies%2Fprivacy-policy&p=%2Fpolicies%2Frefund-policy&p=%2Fpolicies%2Fshipping-policy&p=%2Fpolicies%2Fterms-of-service&p=%2Fproducts%2Fbeanie&p=%2Fproducts%2Fhalf-zip&p=%2Fproducts%2Fhigh-top-sneakers&p=%2Fproducts%2Fwomen-t-shirt&version=0.15416054433044857  5ms
+   GET  200  render  /  13ms
+   GET  200  render  /__manifest?p=%2F&p=%2Faccount&p=%2Fblogs%2Fnews&p=%2Fcart&p=%2Fcollections&p=%2Fcollections%2Fmen&p=%2Fcollections%2Funisex&p=%2Fcollections%2Fwomen&p=%2Fpolicies%2Fprivacy-policy&p=%2Fpolicies%2Frefund-policy&p=%2Fpolicies%2Fshipping-policy&p=%2Fpolicies%2Fterms-of-service&p=%2Fproducts%2Fbeanie&p=%2Fproducts%2Fhalf-zip&p=%2Fproducts%2Fhigh-top-sneakers&p=%2Fproducts%2Fwomen-t-shirt&version=0.15416054433044857  6ms
+   GET  200  render  /products/high-top-sneakers.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  329ms
+  POST  200  render  /cart.data  817ms
+   GET  200  render  /products/high-top-sneakers.data  6ms
+   GET  200  render  /collections/men.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.collections.%24handle  271ms  prefetch
+   GET  200  render  /collections/men.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.collections.%24handle  3ms
+   GET  200  render  /__manifest?p=%2Fproducts%2Fgray-leather-sneakers&p=%2Fproducts%2Fhoodie-old&p=%2Fproducts%2Fmen-crewneck&p=%2Fproducts%2Fmen-t-shirt&p=%2Fproducts%2Fshorts&p=%2Fproducts%2Fsweatpants&p=%2Fproducts%2Fwhite-leather-sneakers&version=0.15416054433044857  3ms
+   GET  200  render  /products/men-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  482ms  prefetch
+   GET  200  render  /products/men-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  3ms  prefetch
+   GET  200  render  /products/hoodie-old.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  260ms  prefetch
+   GET  200  render  /collections/unisex.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.collections.%24handle  253ms  prefetch
+   GET  200  render  /collections/women.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.collections.%24handle  250ms  prefetch
+   GET  200  render  /products/hoodie-old.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  6ms  prefetch
+   GET  200  render  /products/men-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  5ms  prefetch
+   GET  200  render  /products/men-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  4ms  prefetch
+   GET  200  render  /products/men-crewneck.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  368ms  prefetch
+   GET  200  render  /products/men-crewneck.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  5ms  prefetch
+   GET  200  render  /products/sweatpants.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  273ms  prefetch
+   GET  200  render  /products/sweatpants.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  9ms  prefetch
+   GET  200  render  /products/shorts.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  350ms  prefetch
+   GET  200  render  /products/sweatpants.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  6ms  prefetch
+   GET  200  render  /products/white-leather-sneakers.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  347ms  prefetch
+   GET  200  render  /products/men-crewneck.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  5ms  prefetch
+   GET  200  render  /products/gray-leather-sneakers.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  254ms  prefetch
+   GET  200  render  /products/men-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  6ms  prefetch
+   GET  200  render  /products/white-leather-sneakers.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  6ms  prefetch
+   GET  200  render  /products/white-leather-sneakers.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  5ms  prefetch
+   GET  200  render  /products/gray-leather-sneakers.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  5ms  prefetch
+   GET  200  render  /products/white-leather-sneakers.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  6ms  prefetch
+   GET  200  render  /products/gray-leather-sneakers.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  6ms  prefetch
+   GET  200  render  /products/gray-leather-sneakers.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  5ms  prefetch
+   GET  200  render  /products/white-leather-sneakers.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  5ms  prefetch
+   GET  200  render  /collections/men  20ms
+   GET  200  render  /products/white-leather-sneakers.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  4ms  prefetch
+   GET  200  render  /__manifest?p=%2F&p=%2Faccount&p=%2Fblogs%2Fnews&p=%2Fcart&p=%2Fcollections&p=%2Fcollections%2Fmen&p=%2Fcollections%2Funisex&p=%2Fcollections%2Fwomen&p=%2Fpolicies%2Fprivacy-policy&p=%2Fpolicies%2Frefund-policy&p=%2Fpolicies%2Fshipping-policy&p=%2Fpolicies%2Fterms-of-service&p=%2Fproducts%2Fbeanie&p=%2Fproducts%2Fgray-leather-sneakers&p=%2Fproducts%2Fhigh-top-sneakers&p=%2Fproducts%2Fhoodie-old&p=%2Fproducts%2Fmen-crewneck&p=%2Fproducts%2Fmen-t-shirt&p=%2Fproducts%2Fshorts&p=%2Fproducts%2Fsweatpants&p=%2Fproducts%2Fwhite-leather-sneakers&version=0.15416054433044857  8ms
+   GET  200  render  /products/hoodie-old.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  6ms  prefetch
+2:00:20 PM [vite] (client) hmr update /app/components/WishlistButton.tsx, /app/styles/tailwind.css?direct
+2:00:20 PM [vite] (ssr) page reload app/components/WishlistButton.tsx
+   GET  200  render  /_root.data  95ms
+   GET  200  render  /collections/men.data  98ms
+   GET  200  render  /products/hoodie-old.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  5ms  prefetch
+   GET  200  render  /products/men-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  2ms  prefetch
+2:00:29 PM [react-router] Config saved
+2:00:29 PM [vite] (client) hmr update /app/components/WishlistButton.tsx, /app/styles/tailwind.css?direct
+2:00:29 PM [vite] (ssr) page reload app/components/WishlistButton.tsx
+   GET  200  render  /_root.data  97ms
+   GET  200  render  /collections/men.data  103ms
+   GET  200  render  /products/men-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  3ms  prefetch
+2:00:35 PM [react-router] Config saved
+2:00:35 PM [vite] (client) hmr update /app/components/WishlistButton.tsx, /app/styles/tailwind.css?direct
+2:00:35 PM [vite] (ssr) page reload app/components/WishlistButton.tsx
+   GET  200  render  /_root.data  106ms
+   GET  200  render  /collections/men.data  110ms
+   GET  200  render  /  5ms
+   GET  200  render  /collections/men  9ms
+   GET  200  render  /products/hoodie-old.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  6ms  prefetch
+   GET  200  render  /products/men-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  6ms  prefetch
+   GET  200  render  /products/hoodie-old.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  6ms  prefetch
+   GET  200  render  /products/men-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  6ms  prefetch
+   GET  200  render  /products/hoodie-old.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  5ms  prefetch
+   GET  200  render  /products/men-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  5ms  prefetch
+   GET  200  render  /products/sweatpants.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  6ms  prefetch
+   GET  200  render  /products/men-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  9ms  prefetch
+   GET  200  render  /products/men-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  7ms  prefetch
+   GET  200  render  /products/men-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  6ms  prefetch
+   GET  200  render  /products/high-top-sneakers.data?Size=6&_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  420ms  prefetch
+   GET  200  render  /products/high-top-sneakers.data?Size=6&_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  5ms  prefetch
+   GET  200  render  /products/men-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  7ms  prefetch
+   GET  200  render  /products/hoodie-old.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  6ms  prefetch
+   GET  200  render  /products/men-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  5ms  prefetch
+   GET  200  render  /products/men-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  5ms  prefetch
+   GET  200  render  /products/men-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  7ms  prefetch
+2:02:58 PM [react-router] Config saved
+2:03:06 PM [vite] (client) hmr update /app/components/Header.tsx, /app/styles/tailwind.css?direct
+2:03:06 PM [vite] (ssr) page reload app/components/Header.tsx
+   GET  200  render  /_root.data  73ms
+   GET  200  render  /collections/men.data  86ms
+2:03:10 PM [vite] (client) hmr update /app/components/Header.tsx, /app/styles/tailwind.css?direct
+2:03:10 PM [vite] (ssr) page reload app/components/Header.tsx
+   GET  200  render  /_root.data  60ms
+   GET  200  render  /collections/men.data  62ms
+2:03:22 PM [vite] (client) hmr update /app/components/Aside.tsx, /app/styles/tailwind.css?direct
+2:03:22 PM [vite] (ssr) page reload app/components/Aside.tsx
+2:03:22 PM [vite] (client) hmr invalidate /app/components/Aside.tsx Could not Fast Refresh. Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+2:03:22 PM [vite] (client) hmr update /app/styles/tailwind.css?direct, /app/components/PageLayout.tsx, /app/components/CartMain.tsx, /app/components/SearchFormPredictive.tsx, /app/components/Header.tsx, /app/components/SearchResultsPredictive.tsx, /app/components/CartLineItem.tsx, /app/components/ProductForm.tsx, /app/components/WishlistIcon.tsx
+   GET  200  render  /_root.data  116ms
+   GET  200  render  /collections/men.data  119ms
+2:03:33 PM [react-router] Config saved
+2:03:46 PM [react-router] Config saved
+2:03:47 PM [react-router] Config saved
+2:03:56 PM [vite] (client) hmr update /app/components/PageLayout.tsx, /app/styles/tailwind.css?direct
+2:03:56 PM [vite] (ssr) page reload app/components/PageLayout.tsx
+   GET  200  render  /_root.data  53ms
+   GET  200  render  /collections/men.data  58ms
+2:04:00 PM [vite] (client) hmr update /app/components/PageLayout.tsx, /app/styles/tailwind.css?direct
+2:04:00 PM [vite] (ssr) page reload app/components/PageLayout.tsx
+   GET  200  render  /_root.data  66ms
+   GET  200  render  /collections/men.data  68ms
+2:04:44 PM [vite] (client) hmr update /app/styles/app.css?direct
+2:04:44 PM [vite] (client) hmr update /app/root.tsx, /app/styles/tailwind.css?direct
+2:04:44 PM [vite] (client) hmr update /app/styles/app.css?direct, /app/root.tsx, /app/styles/tailwind.css?direct
+2:04:44 PM [vite] (ssr) page reload app/styles/app.css
+   GET  200  render  /_root.data  41ms
+   GET  200  render  /collections/men.data  50ms
+   GET  500  render  /  35ms
+TypeError: Cannot read properties of undefined (reading 'length')
+    at WishlistAside (/Users/perhassle/source/poc/AI/shopify/hydrogen01/hydrogen-storefront/app/components/WishlistAside.tsx:16:24)
+    at renderWithHooks (/Users/perhassle/source/poc/AI/shopify/hydrogen01/hydrogen-storefront/node_modules/.vite/deps_ssr/react-dom_server.js:9820:24)
+    at renderIndeterminateComponent (/Users/perhassle/source/poc/AI/shopify/hydrogen01/hydrogen-storefront/node_modules/.vite/deps_ssr/react-dom_server.js:9878:23)
+    at renderElement (/Users/perhassle/source/poc/AI/shopify/hydrogen01/hydrogen-storefront/node_modules/.vite/deps_ssr/react-dom_server.js:10045:15)
+    at renderNodeDestructiveImpl (/Users/perhassle/source/poc/AI/shopify/hydrogen01/hydrogen-storefront/node_modules/.vite/deps_ssr/react-dom_server.js:10158:17)
+    at renderNodeDestructive (/Users/perhassle/source/poc/AI/shopify/hydrogen01/hydrogen-storefront/node_modules/.vite/deps_ssr/react-dom_server.js:10139:22)
+    at renderNode (/Users/perhassle/source/poc/AI/shopify/hydrogen01/hydrogen-storefront/node_modules/.vite/deps_ssr/react-dom_server.js:10271:20)
+    at renderChildrenArray (/Users/perhassle/source/poc/AI/shopify/hydrogen01/hydrogen-storefront/node_modules/.vite/deps_ssr/react-dom_server.js:10232:15)
+    at renderNodeDestructiveImpl (/Users/perhassle/source/poc/AI/shopify/hydrogen01/hydrogen-storefront/node_modules/.vite/deps_ssr/react-dom_server.js:10184:15)
+    at renderNodeDestructive (/Users/perhassle/source/poc/AI/shopify/hydrogen01/hydrogen-storefront/node_modules/.vite/deps_ssr/react-dom_server.js:10139:22)
+2:05:03 PM [vite] (client) hmr update /app/components/WishlistAside.tsx
+2:05:03 PM [vite] (ssr) page reload app/components/WishlistAside.tsx
+   GET  200  render  /collections/men.data  67ms
+2:05:06 PM [vite] (client) hmr update /app/components/WishlistAside.tsx
+2:05:06 PM [vite] (ssr) page reload app/components/WishlistAside.tsx
+   GET  200  render  /collections/men.data  64ms
+2:05:14 PM [vite] (client) hmr update /app/components/WishlistAside.tsx
+2:05:14 PM [vite] (ssr) page reload app/components/WishlistAside.tsx
+   GET  200  render  /collections/men.data  61ms
+2:05:17 PM [react-router] Config saved
+2:05:18 PM [vite] (client) hmr update /app/components/WishlistAside.tsx
+2:05:18 PM [vite] (ssr) page reload app/components/WishlistAside.tsx
+2:05:18 PM [react-router] Config saved
+   GET  200  render  /collections/men.data  64ms
+2:05:24 PM [react-router] Config saved
+2:05:24 PM [vite] (client) hmr update /app/components/WishlistIcon.tsx, /app/styles/tailwind.css?direct
+2:05:24 PM [vite] (ssr) page reload app/components/WishlistIcon.tsx
+   GET  200  render  /collections/men.data  79ms
+   GET  200  render  /  6ms
+   GET  200  render  /  24ms
+   GET  200  render  /collections/women.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.collections.%24handle  8ms  prefetch
+   GET  200  render  /collections/women.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.collections.%24handle  5ms
+   GET  200  render  /__manifest?p=%2Fproducts%2Fleggings&p=%2Fproducts%2Fwomen-crewneck&p=%2Fproducts%2Fworkout-shirt&version=0.15416054433044857  3ms
+   GET  200  render  /products/women-crewneck.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  350ms  prefetch
+   GET  200  render  /products/women-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  281ms  prefetch
+   GET  200  render  /products/women-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  6ms  prefetch
+   GET  200  render  /products/women-crewneck.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  6ms  prefetch
+   GET  200  render  /products/workout-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  371ms  prefetch
+   GET  200  render  /products/women-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  5ms  prefetch
+   GET  200  render  /products/leggings.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  331ms  prefetch
+2:08:48 PM [vite] (client) hmr update /app/components/WishlistIcon.tsx, /app/styles/tailwind.css?direct
+2:08:48 PM [vite] (ssr) page reload app/components/WishlistIcon.tsx
+   GET  200  render  /_root.data  63ms
+   GET  200  render  /collections/men.data  4ms
+   GET  200  render  /collections/women.data  6ms
+2:08:52 PM [react-router] Config saved
+2:08:52 PM [vite] (client) hmr update /app/components/WishlistAside.tsx, /app/styles/tailwind.css?direct
+2:08:52 PM [vite] (ssr) page reload app/components/WishlistAside.tsx
+   GET  200  render  /_root.data  57ms
+   GET  200  render  /collections/men.data  4ms
+   GET  200  render  /collections/women.data  3ms
+   GET  200  render  /__manifest?p=%2Fproducts%2Fhoodie-old&p=%2Fproducts%2Fmen-crewneck&p=%2Fproducts%2Fmen-t-shirt&p=%2Fproducts%2Fshorts&p=%2Fproducts%2Fsweatpants&p=%2Fproducts%2Fwhite-leather-sneakers&version=0.15416054433044857  2ms
+2:08:56 PM [vite] (client) hmr update /app/components/WishlistAside.tsx, /app/styles/tailwind.css?direct
+2:08:56 PM [vite] (ssr) page reload app/components/WishlistAside.tsx
+   GET  200  render  /_root.data  55ms
+   GET  200  render  /collections/men.data  4ms
+   GET  200  render  /collections/women.data  4ms
+2:09:01 PM [react-router] Config saved
+2:09:01 PM [vite] (client) hmr update /app/components/WishlistAside.tsx, /app/styles/tailwind.css?direct
+2:09:01 PM [vite] (ssr) page reload app/components/WishlistAside.tsx
+   GET  200  render  /_root.data  53ms
+   GET  200  render  /collections/men.data  3ms
+   GET  200  render  /collections/women.data  2ms
+2:09:05 PM [react-router] Config saved
+2:09:05 PM [vite] (client) hmr update /app/components/WishlistAside.tsx, /app/styles/tailwind.css?direct
+2:09:05 PM [vite] (ssr) page reload app/components/WishlistAside.tsx
+   GET  200  render  /_root.data  52ms
+   GET  200  render  /collections/men.data  4ms
+   GET  200  render  /collections/women.data  5ms
+   GET  200  render  /  5ms
+   GET  200  render  /products/workout-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  3ms  prefetch
+   GET  200  render  /collections/women  21ms
+   GET  200  render  /__manifest?p=%2F&p=%2Faccount&p=%2Fblogs%2Fnews&p=%2Fcart&p=%2Fcollections&p=%2Fcollections%2Fmen&p=%2Fcollections%2Funisex&p=%2Fcollections%2Fwomen&p=%2Fpolicies%2Fprivacy-policy&p=%2Fpolicies%2Frefund-policy&p=%2Fpolicies%2Fshipping-policy&p=%2Fpolicies%2Fterms-of-service&p=%2Fproducts%2Fbeanie&p=%2Fproducts%2Fhigh-top-sneakers&p=%2Fproducts%2Fleggings&p=%2Fproducts%2Fwomen-crewneck&p=%2Fproducts%2Fwomen-t-shirt&p=%2Fproducts%2Fworkout-shirt&version=0.15416054433044857  5ms
+   GET  200  render  /__manifest?p=%2Fproducts%2Fhalf-zip&p=%2Fproducts%2Fhoodie-old&p=%2Fproducts%2Fmen-crewneck&p=%2Fproducts%2Fmen-t-shirt&p=%2Fproducts%2Fshorts&p=%2Fproducts%2Fsweatpants&p=%2Fproducts%2Fwhite-leather-sneakers&version=0.15416054433044857  3ms
+   GET  200  render  /products/women-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  5ms  prefetch
+   GET  200  render  /products/women-crewneck.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  6ms  prefetch
+   GET  200  render  /products/workout-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  7ms  prefetch
+   GET  200  render  /products/leggings.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  4ms  prefetch
+   GET  200  render  /products/women-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  5ms  prefetch
+   GET  200  render  /products/men-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  5ms
+  POST  200  render  /cart.data  1056ms
+   GET  200  render  /products/men-t-shirt.data  4ms
+   GET  200  render  /products/men-t-shirt.data?Size=Small&Color=Green&_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  669ms  prefetch
+   GET  200  render  /products/men-t-shirt.data  16ms
+  POST  200  render  /cart.data  941ms
+   GET  200  render  /products/men-t-shirt.data  8ms
+2:12:01 PM [vite] (client) hmr update /app/components/WishlistAside.tsx, /app/styles/tailwind.css?direct
+2:12:01 PM [vite] (ssr) page reload app/components/WishlistAside.tsx
+   GET  200  render  /_root.data  60ms
+   GET  200  render  /collections/men.data  6ms
+   GET  200  render  /products/men-t-shirt.data  4ms
+2:12:07 PM [react-router] Config saved
+2:12:07 PM [vite] (client) hmr update /app/components/WishlistAside.tsx, /app/styles/tailwind.css?direct
+2:12:07 PM [vite] (ssr) page reload app/components/WishlistAside.tsx
+   GET  200  render  /_root.data  57ms
+   GET  200  render  /collections/men.data  4ms
+   GET  200  render  /products/men-t-shirt.data  3ms
+2:12:15 PM [react-router] Config saved
+2:12:15 PM [vite] (client) hmr update /app/components/WishlistAside.tsx, /app/styles/tailwind.css?direct
+2:12:15 PM [vite] (ssr) page reload app/components/WishlistAside.tsx
+   GET  200  render  /_root.data  60ms
+   GET  200  render  /collections/men.data  5ms
+   GET  200  render  /products/men-t-shirt.data  4ms
+   GET  200  render  /  7ms
+   GET  200  render  /products/beanie.data?addToCart=true&_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  440ms
+   GET  200  render  /__manifest?p=%2Fcart&version=0.15416054433044857  2ms
+   GET  200  render  /  5ms
+   GET  200  render  /cart.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.cart  3ms
+   GET  200  render  /collections.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.collections._index  353ms  prefetch
+   GET  200  render  /products/men-t-shirt  23ms
+   GET  200  render  /__manifest?p=%2F&p=%2Faccount&p=%2Fblogs%2Fnews&p=%2Fcart&p=%2Fcollections&p=%2Fcollections%2Fmen&p=%2Fcollections%2Funisex&p=%2Fcollections%2Fwomen&p=%2Fpolicies%2Fprivacy-policy&p=%2Fpolicies%2Frefund-policy&p=%2Fpolicies%2Fshipping-policy&p=%2Fpolicies%2Fterms-of-service&p=%2Fproducts%2Fbeanie&p=%2Fproducts%2Fhigh-top-sneakers&p=%2Fproducts%2Fmen-t-shirt&version=0.15416054433044857  8ms
+   GET  200  render  /__manifest?p=%2Fproducts%2Fmen-crewneck&p=%2Fproducts%2Fshorts&p=%2Fproducts%2Fsweatpants&version=0.15416054433044857  4ms
+   GET  202  render  /account.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.account%2Croutes%2F%28%24locale%29.account._index  46ms  prefetch
+╭─ error ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  In Hydrogen's `customerAccount`:                                            │
+│                                                                              │
+│  You do not have the valid credential to use Customer Account API.           │
+│                                                                              │
+│  Run `h2 env pull` to link your store credentials.                           │
+│                                                                              │
+│  To investigate the issue, examine this stack trace:                         │
+│    at loader (app/routes/($locale).account.tsx:13)                           │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+   GET  200  render  /products/men-t-shirt.data?addToCart=true&_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  398ms
+   GET  200  render  /products/men-crewneck.data?addToCart=true&_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  375ms
+   GET  200  render  /products/sweatpants.data?addToCart=true&_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  398ms
+   GET  200  render  /products/shorts.data?addToCart=true&_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  340ms
+   GET  200  render  /collections/men.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.collections.%24handle  7ms  prefetch
+   GET  200  render  /collections/men.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.collections.%24handle  4ms
+   GET  200  render  /__manifest?p=%2Fproducts%2Fgray-leather-sneakers&p=%2Fproducts%2Fhoodie-old&p=%2Fproducts%2Fwhite-leather-sneakers&version=0.15416054433044857  3ms
+   GET  200  render  /products/men-t-shirt.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  6ms  prefetch
+   GET  200  render  /products/hoodie-old.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  7ms  prefetch
+   GET  200  render  /products/hoodie-old.data?addToCart=true&_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  430ms
+  POST  200  render  /cart.data  1536ms
+   GET  200  render  /products/hoodie-old.data?addToCart=true  7ms
+   GET  200  render  /collections/unisex.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.collections.%24handle  6ms  prefetch
+   GET  200  render  /collections/unisex.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.collections.%24handle  2ms
+   GET  200  render  /__manifest?p=%2Fproducts%2Fblack-sunnies&p=%2Fproducts%2Ffrontpack&p=%2Fproducts%2Fhalf-zip&p=%2Fproducts%2Flight-puffer&p=%2Fproducts%2Fpuffer&p=%2Fproducts%2Fpuffer-jacket&version=0.15416054433044857  5ms
+   GET  200  render  /products/sweatpants.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  5ms  prefetch
+   GET  200  render  /products/light-puffer.data?_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  448ms  prefetch
+   GET  200  render  /products/light-puffer.data?addToCart=true&_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  452ms
+   GET  200  render  /products/beanie.data?Color=Olive&_routes=routes%2F%28%24locale%29%2Croutes%2F%28%24locale%29.products.%24handle  953ms  prefetch
+  POST  200  render  /cart.data  921ms
+   GET  200  render  /products/light-puffer.data?addToCart=true  3ms

@@ -7,6 +7,7 @@ import {
 } from '@shopify/hydrogen';
 import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
+import {WishlistIcon} from '~/components/WishlistIcon';
 
 interface HeaderProps {
   header: HeaderQuery;
@@ -110,6 +111,7 @@ function HeaderCtas({
         </Suspense>
       </NavLink>
       <SearchToggle />
+      <WishlistIcon />
       <CartToggle cart={cart} />
     </nav>
   );
