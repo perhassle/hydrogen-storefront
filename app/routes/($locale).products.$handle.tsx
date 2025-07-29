@@ -14,7 +14,9 @@ import {ProductForm} from '~/components/ProductForm';
 import {InventoryStatus} from '~/components/InventoryStatus';
 import {BackInStockNotification} from '~/components/BackInStockNotification';
 import {PreOrderButton} from '~/components/PreOrderButton';
+import {RelatedProducts} from '~/components/RelatedProducts';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
+import {RELATED_PRODUCTS_QUERY} from '~/lib/fragments';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [
@@ -27,11 +29,11 @@ export const meta: MetaFunction<typeof loader> = ({data}) => {
 };
 
 export async function loader(args: LoaderFunctionArgs) {
-  // Start fetching non-critical data without blocking time to first byte
-  const deferredData = loadDeferredData(args);
-
   // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
+  
+  // Start fetching non-critical data without blocking time to first byte
+  const deferredData = loadDeferredData({...args, productId: criticalData.productId});
 
   return {...deferredData, ...criticalData};
 }
@@ -68,6 +70,7 @@ async function loadCriticalData({
 
   return {
     product,
+    productId: product.id, // Pass product ID for deferred data
   };
 }
 
@@ -76,15 +79,27 @@ async function loadCriticalData({
  * fetched after the initial page load. If it's unavailable, the page should still 200.
  * Make sure to not throw any errors here, as it will cause the page to 500.
  */
-function loadDeferredData({context, params}: LoaderFunctionArgs) {
-  // Put any API calls that is not critical to be available on first page render
-  // For example: product reviews, product recommendations, social feeds.
+function loadDeferredData({context, productId}: LoaderFunctionArgs & {productId: string}) {
+  const {storefront} = context;
+  
+  // Load related products based on product ID
+  const relatedProducts = storefront.query(RELATED_PRODUCTS_QUERY, {
+    variables: {
+      productId,
+      first: 12,
+    },
+  }).catch((error) => {
+    console.error('Failed to load related products:', error);
+    return null;
+  });
 
-  return {};
+  return {
+    relatedProducts,
+  };
 }
 
 export default function Product() {
-  const {product} = useLoaderData<typeof loader>();
+  const {product, relatedProducts} = useLoaderData<typeof loader>();
 
   // Optimistically selects a variant with given available variant information
   const selectedVariant = useOptimisticVariant(
@@ -148,6 +163,10 @@ export default function Product() {
         <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
         <br />
       </div>
+      
+      {/* Related Products Section */}
+      <RelatedProducts products={relatedProducts} currentProductId={product.id} />
+      
       <Analytics.ProductView
         data={{
           products: [

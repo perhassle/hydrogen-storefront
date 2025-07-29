@@ -231,3 +231,55 @@ export const FOOTER_QUERY = `#graphql
   }
   ${MENU_FRAGMENT}
 ` as const;
+
+// Related Products Fragments
+export const RELATED_PRODUCT_FRAGMENT = `#graphql
+  fragment RelatedProduct on Product {
+    id
+    title
+    handle
+    availableForSale
+    priceRange {
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+    }
+    featuredImage {
+      id
+      url
+      altText
+      width
+      height
+    }
+  }
+` as const;
+
+export const RELATED_PRODUCTS_QUERY = `#graphql
+  ${RELATED_PRODUCT_FRAGMENT}
+  query RelatedProducts(
+    $country: CountryCode
+    $language: LanguageCode
+    $productId: ID!
+    $first: Int = 12
+  ) @inContext(country: $country, language: $language) {
+    product(id: $productId) {
+      id
+      collections(first: 3) {
+        nodes {
+          id
+          products(first: $first) {
+            nodes {
+              ...RelatedProduct
+            }
+          }
+        }
+      }
+    }
+    products(first: $first, sortKey: UPDATED_AT, reverse: true) {
+      nodes {
+        ...RelatedProduct
+      }
+    }
+  }
+` as const;
