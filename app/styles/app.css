@@ -12,6 +12,21 @@ img {
   border-radius: 4px;
 }
 
+/* Product image frame styling for thick gray border effect */
+.product-image,
+.product-item-image-container {
+  background-color: #f5f5f5;
+  border: 8px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-image img,
+.product-item-image-container img {
+  border-radius: 4px;
+}
+
 /*
 * --------------------------------------------------
 * Non anchor links
@@ -509,6 +524,25 @@ button.reset:hover:not(:has(> *)) {
   transition-delay: 0s;
 }
 
+/* Ensure product item images get the border treatment */
+.product-item .product-item-image-container {
+  background-color: #f5f5f5;
+  border: 8px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+/* Apply border treatment to demo page product placeholders */
+.product-item .bg-gray-100 {
+  background-color: #f5f5f5 !important;
+  border: 8px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 /*
 * --------------------------------------------------
 * components/RelatedProducts
@@ -671,6 +705,16 @@ button.reset:hover:not(:has(> *)) {
 .product-image img {
   height: auto;
   width: 100%;
+}
+
+/* Ensure main product page images get the border treatment */
+.product .product-image {
+  background-color: #f5f5f5;
+  border: 8px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
 }
 
 .product-main {
