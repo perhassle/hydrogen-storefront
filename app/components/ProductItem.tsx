@@ -91,16 +91,20 @@ export function ProductItem({
             <span>⭕</span> Out of Stock
           </div>
         ) : isLowStock && quantityAvailable ? (
-          <div className="product-item-status low-stock">
-            <span>⚠️</span> {quantityAvailable} left
+          <div className="product-item-status low-stock urgent">
+            <span>⚠️</span> Only {quantityAvailable} left - Order now!
           </div>
         ) : hasLimitedStock && quantityAvailable ? (
           <div className="product-item-status limited-stock">
             <span>📦</span> {quantityAvailable} in stock
           </div>
+        ) : quantityAvailable ? (
+          <div className="product-item-status in-stock">
+            <span>🟠</span> {quantityAvailable} in stock
+          </div>
         ) : (
           <div className="product-item-status in-stock">
-            <span>✅</span> In Stock
+            <span>🟠</span> In Stock
           </div>
         )}
       </Link>
