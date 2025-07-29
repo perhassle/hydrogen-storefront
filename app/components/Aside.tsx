@@ -5,12 +5,15 @@ import {
   useEffect,
   useState,
 } from 'react';
+import type {ProductFragment} from 'storefrontapi.generated';
 
-type AsideType = 'search' | 'cart' | 'mobile' | 'closed';
+type AsideType = 'search' | 'cart' | 'mobile' | 'quickview' | 'closed';
 type AsideContextValue = {
   type: AsideType;
   open: (mode: AsideType) => void;
   close: () => void;
+  openQuickView: (product: ProductFragment) => void;
+  quickViewProduct: ProductFragment | null;
 };
 
 /**
@@ -76,13 +79,26 @@ const AsideContext = createContext<AsideContextValue | null>(null);
 
 Aside.Provider = function AsideProvider({children}: {children: ReactNode}) {
   const [type, setType] = useState<AsideType>('closed');
+  const [quickViewProduct, setQuickViewProduct] = useState<ProductFragment | null>(null);
+
+  const openQuickView = (product: ProductFragment) => {
+    setQuickViewProduct(product);
+    setType('quickview');
+  };
+
+  const close = () => {
+    setType('closed');
+    setQuickViewProduct(null);
+  };
 
   return (
     <AsideContext.Provider
       value={{
         type,
         open: setType,
-        close: () => setType('closed'),
+        close,
+        openQuickView,
+        quickViewProduct,
       }}
     >
       {children}
