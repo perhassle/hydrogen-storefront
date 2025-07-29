@@ -165,6 +165,7 @@ function ProductOptionSwatch({
       aria-label={name}
       className={`product-option-label-swatch${color ? ' has-color' : ''}`}
       {...(color && { 'data-color': color })}
+      style={color ? { backgroundColor: color } : undefined}
     >
       {!!image && <img src={image} alt={name} />}
     </div>
