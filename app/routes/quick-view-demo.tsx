@@ -17,6 +17,31 @@ const mockProducts = [
       width: 400,
       height: 400,
     },
+    images: {
+      nodes: [
+        {
+          id: 'image-1',
+          url: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop',
+          altText: 'Eco-Friendly T-Shirt - Front View',
+          width: 400,
+          height: 400,
+        },
+        {
+          id: 'image-1-back',
+          url: 'https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=400&h=400&fit=crop',
+          altText: 'Eco-Friendly T-Shirt - Back View',
+          width: 400,
+          height: 400,
+        },
+        {
+          id: 'image-1-detail',
+          url: 'https://images.unsplash.com/photo-1503341960582-b45751874cf0?w=400&h=400&fit=crop',
+          altText: 'Eco-Friendly T-Shirt - Fabric Detail',
+          width: 400,
+          height: 400,
+        },
+      ],
+    },
     priceRange: {
       minVariantPrice: {
         amount: '29.99',
@@ -118,6 +143,24 @@ const mockProducts = [
       altText: 'Wireless Headphones',
       width: 400,
       height: 400,
+    },
+    images: {
+      nodes: [
+        {
+          id: 'image-2',
+          url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop',
+          altText: 'Wireless Headphones - Black',
+          width: 400,
+          height: 400,
+        },
+        {
+          id: 'image-2-side',
+          url: 'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&h=400&fit=crop',
+          altText: 'Wireless Headphones - Side View',
+          width: 400,
+          height: 400,
+        },
+      ],
     },
     priceRange: {
       minVariantPrice: {
