@@ -128,6 +128,7 @@ export default function Product() {
                 minVariantPrice: selectedVariant?.price || { amount: '0', currencyCode: 'USD' },
               },
             }}
+            selectedVariant={selectedVariant}
             size="lg"
             className="ml-4"
           />

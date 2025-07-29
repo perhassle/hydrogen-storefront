@@ -21,6 +21,7 @@ import {PageLayout} from './components/PageLayout';
 
 import {Aside, useAside} from './components/Aside';
 import {ProductQuickView} from './components/ProductQuickView';
+import {WishlistProvider} from './lib/wishlist-context';
 
 
 export type RootLoader = typeof loader;

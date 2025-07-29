@@ -1,34 +1,18 @@
 import {Aside} from '~/components/Aside';
 import {useWishlist} from '~/lib/wishlist-context';
-import {Link, useNavigate} from 'react-router';
+import {Link} from 'react-router';
+import {CartForm, type OptimisticCartLineInput} from '@shopify/hydrogen';
 import type {WishlistItem} from '~/lib/wishlist-context';
 
 export function WishlistAside() {
   const {items, removeFromWishlist} = useWishlist();
-  const navigate = useNavigate();
   
   // Handle SSR case where items might be undefined
   const wishlistItems = items || [];
-
+  
   const handleAddToCart = (item: WishlistItem) => {
-    // Remove from wishlist first
+    // Remove from wishlist when cart form is submitted
     removeFromWishlist(item.productId);
-    
-    // Navigate to product page with addToCart parameter
-    navigate(`/products/${item.productHandle}?addToCart=true`);
-  };
-
-  const handleAddAllToCart = () => {
-    // Add all items to cart and remove from wishlist
-    wishlistItems.forEach((item) => {
-      removeFromWishlist(item.productId);
-    });
-    
-    // Navigate to cart page
-    navigate('/cart');
-    
-    // Show feedback to user
-    console.log(`Added ${wishlistItems.length} items to cart`);
   };
 
   return (
@@ -44,12 +28,30 @@ export function WishlistAside() {
             <div className="wishlist-header">
               <p>{wishlistItems.length} items in your wishlist</p>
               {wishlistItems.length > 1 && (
-                <button
-                  className="add-all-btn"
-                  onClick={handleAddAllToCart}
+                <CartForm
+                  route="/cart"
+                  inputs={{
+                    lines: wishlistItems.map(item => ({
+                      merchandiseId: item.variantId,
+                      quantity: 1,
+                    } as OptimisticCartLineInput))
+                  }}
+                  action={CartForm.ACTIONS.LinesAdd}
                 >
-                  Add All to Cart
-                </button>
+                  {(fetcher) => (
+                    <button
+                      type="submit"
+                      className="add-all-btn"
+                      disabled={fetcher.state !== 'idle'}
+                      onClick={() => {
+                        // Remove all items from wishlist after successful cart addition
+                        wishlistItems.forEach(item => removeFromWishlist(item.productId));
+                      }}
+                    >
+                      {fetcher.state !== 'idle' ? 'Adding All...' : 'Add All to Cart'}
+                    </button>
+                  )}
+                </CartForm>
               )}
             </div>
             
@@ -82,12 +84,27 @@ export function WishlistAside() {
                     )}
                     
                     <div className="item-actions">
-                      <button
-                        className="add-to-cart-btn"
-                        onClick={() => handleAddToCart(item)}
+                      <CartForm
+                        route="/cart"
+                        inputs={{
+                          lines: [{
+                            merchandiseId: item.variantId,
+                            quantity: 1,
+                          } as OptimisticCartLineInput]
+                        }}
+                        action={CartForm.ACTIONS.LinesAdd}
                       >
-                        Add to Cart
-                      </button>
+                        {(fetcher) => (
+                          <button
+                            type="submit"
+                            className="add-to-cart-btn"
+                            disabled={fetcher.state !== 'idle'}
+                            onClick={() => handleAddToCart(item)}
+                          >
+                            {fetcher.state !== 'idle' ? 'Adding...' : 'Add to Cart'}
+                          </button>
+                        )}
+                      </CartForm>
                       
                       <button
                         className="remove-btn"

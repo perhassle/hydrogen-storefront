@@ -15,6 +15,7 @@ export interface WishlistItem {
     amount: string;
     currencyCode: string;
   };
+  variantId: string;
   addedDate: string;
 }
 

@@ -17,6 +17,13 @@ interface WishlistButtonProps {
       };
     };
   };
+  selectedVariant?: {
+    id: string;
+    price: {
+      amount: string;
+      currencyCode: string;
+    };
+  } | null;
   className?: string;
   size?: 'sm' | 'md' | 'lg';
   showTooltip?: boolean;
@@ -24,6 +31,7 @@ interface WishlistButtonProps {
 
 export function WishlistButton({
   product,
+  selectedVariant,
   className = '',
   size = 'md',
   showTooltip = true,
@@ -43,12 +51,17 @@ export function WishlistButton({
     if (inWishlist) {
       removeFromWishlist(product.id);
     } else {
+      // Use selectedVariant if available, otherwise create a placeholder variant ID
+      // This is a temporary solution - in a real app you'd fetch the first available variant
+      const variantId = selectedVariant?.id || `${product.id}_default_variant`;
+      
       const wishlistItem: Omit<WishlistItem, 'addedDate'> = {
         productId: product.id,
         productHandle: product.handle,
         productTitle: product.title,
         productImage: product.featuredImage?.url,
-        price: product.priceRange?.minVariantPrice,
+        price: selectedVariant?.price || product.priceRange?.minVariantPrice,
+        variantId: variantId,
       };
       addToWishlist(wishlistItem);
     }
