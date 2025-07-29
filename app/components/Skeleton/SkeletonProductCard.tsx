@@ -1,8 +1,8 @@
 export function SkeletonProductCard() {
   return (
     <div className="product-item animate-pulse">
-      {/* Image skeleton */}
-      <div className="bg-gray-200 aspect-square rounded-md mb-3"></div>
+      {/* Image skeleton with border treatment */}
+      <div className="bg-gray-200 aspect-square rounded-md mb-3 product-item-image-container"></div>
       
       {/* Title skeleton */}
       <div className="space-y-2">
