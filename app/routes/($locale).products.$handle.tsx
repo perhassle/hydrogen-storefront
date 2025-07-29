@@ -11,7 +11,9 @@ import {
 import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
-import {RelatedProducts} from '~/components/RelatedProducts';
+import {InventoryStatus} from '~/components/InventoryStatus';
+import {BackInStockNotification} from '~/components/BackInStockNotification';
+import {PreOrderButton} from '~/components/PreOrderButton';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
@@ -77,23 +79,12 @@ async function loadCriticalData({
 function loadDeferredData({context, params}: LoaderFunctionArgs) {
   // Put any API calls that is not critical to be available on first page render
   // For example: product reviews, product recommendations, social feeds.
-  
-  const relatedProducts = context.storefront
-    .query(RELATED_PRODUCTS_QUERY, {
-      variables: {handle: params.handle, first: 10},
-    })
-    .catch((error) => {
-      console.error(error);
-      return null;
-    });
 
-  return {
-    relatedProducts,
-  };
+  return {};
 }
 
 export default function Product() {
-  const {product, relatedProducts} = useLoaderData<typeof loader>();
+  const {product} = useLoaderData<typeof loader>();
 
   // Optimistically selects a variant with given available variant information
   const selectedVariant = useOptimisticVariant(
@@ -115,18 +106,39 @@ export default function Product() {
 
   return (
     <div className="product">
-      <ProductImage image={selectedVariant?.image} />
+      <ProductImage 
+        image={selectedVariant?.image} 
+        loading="eager"
+        priority={true}
+      />
       <div className="product-main">
         <h1>{title}</h1>
         <ProductPrice
           price={selectedVariant?.price}
           compareAtPrice={selectedVariant?.compareAtPrice}
         />
+        
+        {/* Inventory Status Display */}
+        <InventoryStatus selectedVariant={selectedVariant} product={product} />
+        
         <br />
         <ProductForm
           productOptions={productOptions}
           selectedVariant={selectedVariant}
         />
+        
+        {/* Back-in-Stock Notification for out-of-stock items */}
+        <BackInStockNotification 
+          product={product}
+          selectedVariant={selectedVariant}
+        />
+        
+        {/* Pre-order option for out-of-stock items */}
+        <PreOrderButton 
+          product={product}
+          selectedVariant={selectedVariant}
+        />
+        
         <br />
         <br />
         <p>
@@ -136,9 +148,6 @@ export default function Product() {
         <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
         <br />
       </div>
-      
-      <RelatedProducts products={relatedProducts} currentProductId={product.id} />
-      
       <Analytics.ProductView
         data={{
           products: [
@@ -182,6 +191,7 @@ const PRODUCT_VARIANT_FRAGMENT = `#graphql
       title
       handle
     }
+    quantityAvailable
     selectedOptions {
       name
       value
@@ -248,49 +258,4 @@ const PRODUCT_QUERY = `#graphql
     }
   }
   ${PRODUCT_FRAGMENT}
-` as const;
-
-const RELATED_PRODUCTS_QUERY = `#graphql
-  fragment RelatedProduct on Product {
-    id
-    title
-    handle
-    priceRange {
-      minVariantPrice {
-        amount
-        currencyCode
-      }
-    }
-    featuredImage {
-      id
-      url
-      altText
-      width
-      height
-    }
-  }
-  query RelatedProducts(
-    $country: CountryCode
-    $language: LanguageCode
-    $handle: String!
-    $first: Int!
-  ) @inContext(country: $country, language: $language) {
-    product(handle: $handle) {
-      id
-      collections(first: 1) {
-        nodes {
-          products(first: $first, filters: []) {
-            nodes {
-              ...RelatedProduct
-            }
-          }
-        }
-      }
-    }
-    products(first: $first, query: "available_for_sale:true") {
-      nodes {
-        ...RelatedProduct
-      }
-    }
-  }
 ` as const;

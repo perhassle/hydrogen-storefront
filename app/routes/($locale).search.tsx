@@ -11,6 +11,8 @@ import {
   type PredictiveSearchReturn,
   getEmptyPredictiveSearchResult,
 } from '~/lib/search';
+import {Suspense} from 'react';
+import {LoadingSpinner, LoadingButton, ErrorBoundary} from '~/components/Skeleton';
 
 export const meta: MetaFunction = () => {
   return [{title: `Hydrogen | Search`}];
@@ -42,35 +44,56 @@ export default function SearchPage() {
   return (
     <div className="search">
       <h1>Search</h1>
-      <SearchForm>
-        {({inputRef}) => (
-          <>
-            <input
-              defaultValue={term}
-              name="q"
-              placeholder="Search…"
-              ref={inputRef}
-              type="search"
-            />
-            &nbsp;
-            <button type="submit">Search</button>
-          </>
-        )}
-      </SearchForm>
-      {error && <p style={{color: 'red'}}>{error}</p>}
-      {!term || !result?.total ? (
-        <SearchResults.Empty />
-      ) : (
-        <SearchResults result={result} term={term}>
-          {({articles, pages, products, term}) => (
-            <div>
-              <SearchResults.Products products={products} term={term} />
-              <SearchResults.Pages pages={pages} term={term} />
-              <SearchResults.Articles articles={articles} term={term} />
-            </div>
+      <ErrorBoundary>
+        <SearchForm>
+          {({inputRef}) => (
+            <>
+              <input
+                defaultValue={term}
+                name="q"
+                placeholder="Search…"
+                ref={inputRef}
+                type="search"
+                className="border border-gray-300 rounded-lg px-3 py-2 mr-2"
+              />
+              <LoadingButton 
+                type="submit"
+                variant="primary"
+                size="md"
+              >
+                Search
+              </LoadingButton>
+            </>
           )}
-        </SearchResults>
-      )}
+        </SearchForm>
+        
+        {error && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mt-4">
+            <p className="text-red-800">Search failed: {error}</p>
+          </div>
+        )}
+        
+        <Suspense fallback={
+          <div className="flex items-center justify-center py-8">
+            <LoadingSpinner size="lg" />
+            <span className="ml-2">Searching...</span>
+          </div>
+        }>
+          {!term || !result?.total ? (
+            <SearchResults.Empty />
+          ) : (
+            <SearchResults result={result} term={term}>
+              {({articles, pages, products, term}) => (
+                <div>
+                  <SearchResults.Products products={products} term={term} />
+                  <SearchResults.Pages pages={pages} term={term} />
+                  <SearchResults.Articles articles={articles} term={term} />
+                </div>
+              )}
+            </SearchResults>
+          )}
+        </Suspense>
+      </ErrorBoundary>
       <Analytics.SearchView data={{searchTerm: term, searchResults: result}} />
     </div>
   );
